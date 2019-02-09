@@ -4,15 +4,24 @@ const Trending = styled.div`
   width: 40%;
   border-right: 1px solid black;
   height: 100%;
+  overflow: scroll;
   font-size: 30px;
   float: left;
 
-  img {
+  .tile {
     width: 200px;
-    height: auto;
+    height: 200px;
     cursor: pointer;
-    max-width:100%;
-    max-height:100%;
+    margin: 0 auto;
+  }
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+  }
+
+  .selected {
+    border: 3px solid green;
   }
 `;
 
