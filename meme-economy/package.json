@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "clarifai": "^2.9.0",
+    "csvtojson": "^2.0.8",
     "jquery": "^3.3.1",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
@@ -13,7 +15,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "clartest": "node ./src/database/clarTest.js"
   },
   "eslintConfig": {
     "extends": "react-app"
