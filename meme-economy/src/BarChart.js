@@ -52,44 +52,37 @@ class BarChart extends Component {
         .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
 
         // 9. Append the path, bind the data, and call the line generator 
-        svg.append("path")
+        var path = svg.append("path")
         .datum(dataset) // 10. Binds data to the line 
         .attr("class", "line") // Assign a class for styling 
         .attr("d", line); // 11. Calls the line generator 
 
+        var totalLength = path.node().getTotalLength();
+
+        path
+        .attr("stroke-dasharray", totalLength + " " + totalLength)
+        .attr("stroke-dashoffset", totalLength)
+        .transition() // Call Transition Method
+        .duration(5000) // Set Duration timing (ms)
+        .ease(d3.easeLinear) // Set Easing option
+        .attr("stroke-dashoffset", 0);
+
         // 12. Appends a circle for each datapoint 
-        svg.selectAll(".dot")
-        .data(dataset)
-        .enter().append("circle") // Uses the enter().append() method
-        .attr("class", "dot") // Assign a class for styling
-        .attr("cx", function(d, i) { return xScale(i) })
-        .attr("cy", function(d) { return yScale(d.y) })
-        .attr("r", 5);
-
-    //   const data = [120, 50, 60, 60, 90, 100];
-        
-    //   const svg = d3.select(".chart").append("svg").attr("width", 700).attr("height", 300);
-
-    //   console.log(svg)
-
-    // svg.selectAll("rect")
-    // .data(data)
-    // .enter()
-    // .append("rect")
-    // .attr("x", (d, i) => i * 70)
-    // .attr("y", 0)
-    // .attr("width", 25)
-    // .attr("height", (d, i) => d)
-    // .attr("fill", "green");
+        // svg.selectAll(".dot")
+        // .data(dataset)
+        // .enter().append("circle") // Uses the enter().append() method
+        // .attr("class", "dot") // Assign a class for styling
+        // .attr("cx", function(d, i) { return xScale(i) })
+        // .attr("cy", function(d) { return yScale(d.y) })
+        // .attr("r", 5);
+      }
       
-    }
-  
     componentDidMount() {
       this.drawChart();
     }
 
     render(){
-        return <div className="chart" id={"#" + this.props.id}>Chart</div>
+        return <div className="chart">Chart</div>
       }
   }
   
