@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import BarChart from './BarChart';
 import { hello } from './database/helper';
 import Ticker from './Ticker';
+import NavBar from './NavBar'
 import PopUp from './PopUp';
 
 const GlobalStyle = createGlobalStyle`
@@ -31,13 +32,6 @@ const GlobalWrapper = styled.div`
   height: 100%;
 `;
 
-const NavBar = styled.div`
-  text-align: left;
-  border-bottom: 1px solid black;
-  font-style: italic;
-  padding: 0 20px;
-`;
-
 const PageWrapper = styled.div`
   height: 100%;
 `;
@@ -55,7 +49,7 @@ class Page extends Component {
     return (
       <GlobalWrapper>
         <GlobalStyle />
-        <NavBar>The Meme Economy</NavBar>
+        <NavBar></NavBar>
         <Ticker></Ticker>
         <PageWrapper>
           <Trending> Trending</Trending>
