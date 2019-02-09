@@ -9,7 +9,7 @@ class BarChart extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {source: ""};
+    this.state = {source: "all"};
 
     this.doHandleAll = this.doHandleAll.bind(this);
     this.doHandleReddit = this.doHandleReddit.bind(this);
@@ -30,7 +30,7 @@ class BarChart extends Component {
   componentDidUpdate() {
     d3.select("svg").remove();
     console.log("mount");
-    if (this.state.source == "") {
+    if (this.state.source == "all") {
       getGraph(this.props.memeId).then(result => {
         //console.log(result)
         this.drawChart(getPlotPoints(result, 'hour'))
@@ -43,7 +43,7 @@ class BarChart extends Component {
       })
       .catch (err => console.log(err));
     } else if (this.state.source == "facebook") {
-      getGraphBySite(this.props.memeId,"facebook").then(result => {
+      getGraphBySite(this.props.memeId,"FB").then(result => {
         console.log(result)
         this.drawChart(getPlotPoints(result, 'hour'))
       })
@@ -177,7 +177,7 @@ class BarChart extends Component {
   
       doHandleAll() {
         this.setState({
-          source: ""
+          source: "all"
         })
       };
 
@@ -202,17 +202,35 @@ class BarChart extends Component {
   render(){
     console.log("rendered");
     console.log(this.props.memeId);  
+
+    let allButton = <button onClick={this.doHandleAll}>All</button>
+    let redditButton = <button onClick={this.doHandleReddit}>Reddit</button>
+    let facebookButton = <button onClick={this.doHandleFacebook}>Facebook</button>
+    let instagramButton = <button onClick={this.doHandleInstagram}>Instagram</button>
+
+    switch (this.state.source) {
+      case "all":
+        allButton = <button className="selected" onClick={this.doHandleAll}>All</button>
+        break
+      case "reddit":
+        redditButton = <button className="selected" onClick={this.doHandleReddit}>Reddit</button>
+        break
+      case "facebook":
+        facebookButton = <button className="selected" onClick={this.doHandleFacebook}>Facebook</button>
+        break
+      case "instagram":
+        instagramButton = <button className="selected" onClick={this.doHandleInstagram}>Instagram</button>
+        break
+    };
     
       if (this.props.memeId) {
         return <div className="chart">
         <div>
           Meme popularity  
         </div>
-        <button onClick={this.doHandleAll}>All</button>
-        <button onClick={this.doHandleReddit}>Reddit</button>
-        <button onClick={this.doHandleFacebook}>Facebook</button>
-        <button onClick={this.doHandleInstagram}>Instagram</button>
+        {allButton}{redditButton}{facebookButton}{instagramButton}
       </div>
+
       } else {
         return <div></div>
       }

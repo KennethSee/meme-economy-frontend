@@ -91,3 +91,8 @@ code {
   max-width: 50px; 
   max-height: 50px;
 }
+
+.selected {
+  border: 1px solid lightgreen;
+  background-color: lightgray;
+}
