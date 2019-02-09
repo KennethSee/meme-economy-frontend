@@ -9,19 +9,37 @@ const Trending = styled.div`
   float: left;
 
   .tile {
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: auto;
+    overflow: hidden;
+    text-align: center;
     cursor: pointer;
-    margin: 0 auto;
+    margin: 20px auto;
+    border: 3px solid black;
+    transition: .25s transform ease-out;
+    background-color: white;
+  }
+
+  .tile:hover {
+    transform: scale(1.1);
+    z-index: 5;
   }
 
   img {
-    max-width: 100%;
-    max-height: 100%;
+    max-height: 300px;
+    max-width: 300px;
+    vertical-align: middle;
+    background-color: white;
+    -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 2s; /* Firefox < 16 */
+        -ms-animation: fadein 2s; /* Internet Explorer */
+         -o-animation: fadein 2s; /* Opera < 12.1 */
+            animation: fadein 2s;
   }
 
   .selected {
     border: 3px solid green;
+    transform: scale(1.1);
   }
 `;
 
