@@ -80,6 +80,7 @@ class BarChart extends Component {
         .attr("stroke-dasharray", totalLength + " " + totalLength)
         .attr("stroke-dashoffset", totalLength)
         .transition() // Call Transition Method
+        .delay(1000)
         .duration(7000) // Set Duration timing (ms)
         .ease(d3.easeCubicOut) // Set Easing option
         .attr("stroke-dashoffset", 0);

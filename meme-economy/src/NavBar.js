@@ -6,8 +6,10 @@ class NavBar extends Component {
     return (
       <NavBarStyles>
         The Meme Economy
-        <input type="text" placeholder="Search for a meme..."></input>
-        <button type="submit"><span role="img" aria-label="search">🔎</span></button>
+        <div className="search">
+          <button type="submit"><span role="img" aria-label="search">🔎</span></button>
+          <input type="text" placeholder="Search for a meme..."></input>
+        </div>
       </NavBarStyles>
     );
   }
