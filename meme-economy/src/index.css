@@ -41,12 +41,6 @@ code {
   stroke-width: 1.5px;
 }
 
-/* Style the dots by assigning a fill and stroke */
-/* .dot {
-  fill: steelblue;
-  stroke: #fff;
-} */
-
 .axis path,
 .axis line {
   fill: none;
