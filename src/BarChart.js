@@ -17,23 +17,24 @@ class BarChart extends Component {
         return comparison;
     };
 
-  componentDidMount() {
+  componentDidUpdate() {
+    d3.select("svg").remove();
+    console.log("mount");
     getGraph(this.props.memeId).then(result => {
       //console.log(result)
       this.drawChart(getPlotPoints(result, 'hour'))
-    }
-    )
+    })
     .catch (err => console.log(err));
   }
   
     drawChart(plotPoints) {
-      // console.log(plotPoints);
       let d = new Date();
       let today = new Date(d.getFullYear(), d.getMonth(), d.getDate());
       let relevantPlotPoints = plotPoints.filter((points) => {
         return points.x.getDate() == today.getDate();
       });
       console.log(relevantPlotPoints);
+      console.log(plotPoints);
 
         // 2. Use the margin convention practice 
         var margin = {top: 30, right: 30, bottom: 50, left: 50}
@@ -133,13 +134,13 @@ class BarChart extends Component {
         .attr("stroke-dashoffset", 0);
 
         // 12. Appends a circle for each datapoint 
-        // svg.selectAll(".dot")
-        // .data(dataset)
-        // .enter().append("circle") // Uses the enter().append() method
-        // .attr("class", "dot") // Assign a class for styling
-        // .attr("cx", function(d, i) { return xScale(i) })
-        // .attr("cy", function(d) { return yScale(d.y) })
-        // .attr("r", 5);
+        svg.selectAll(".dot")
+        .data(dataset)
+        .enter().append("circle") // Uses the enter().append() method
+        .attr("class", "dot") // Assign a class for styling
+        .attr("cx", function(d, i) { return xScale(i) })
+        .attr("cy", function(d) { return yScale(d.y) })
+        .attr("r", 5);
 
       }
       
@@ -147,6 +148,7 @@ class BarChart extends Component {
   
 
   render(){
+    console.log("rendered");
       return <div className="chart">Meme popularity over time{this.props.memeId}</div>
     }
 }
