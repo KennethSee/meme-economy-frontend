@@ -1,5 +1,6 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import React, { Component } from 'react';
+import BarChart from './BarChart';
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto');
@@ -43,6 +44,7 @@ const Trending = styled.div`
   border-right: 1px solid black;
   height: 100%;
   font-size: 30px;
+  float: left;
 `;
 
 
@@ -54,6 +56,7 @@ class Page extends Component {
         <NavBar>The Meme Economy</NavBar>
         <PageWrapper>
           <Trending> Trending</Trending>
+          <BarChart></BarChart>
         </PageWrapper>
       </GlobalWrapper>
     );
