@@ -61,7 +61,6 @@ class Page extends Component {
           <Trending> Trending</Trending>
           <BarChart></BarChart>
           <button onClick={this.handleClick}>hello</button>
-          <PopUp></PopUp>
         </PageWrapper>
       </GlobalWrapper>
     );
