@@ -9,12 +9,16 @@ class BarChart extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {source: "all"};
+    this.state = {source: "all", dayView: "1D"};
 
     this.doHandleAll = this.doHandleAll.bind(this);
     this.doHandleReddit = this.doHandleReddit.bind(this);
     this.doHandleFacebook = this.doHandleFacebook.bind(this);
     this.doHandleInstagram = this.doHandleInstagram.bind(this);
+
+    this.doHandle1D = this.doHandle1D.bind(this);
+    this.doHandle5D = this.doHandle5D.bind(this);
+    this.doHandle1M = this.doHandle1M.bind(this);
   }
 
     compare(a,b) {
@@ -208,6 +212,10 @@ class BarChart extends Component {
     let facebookButton = <button onClick={this.doHandleFacebook}>Facebook</button>
     let instagramButton = <button onClick={this.doHandleInstagram}>Instagram</button>
 
+    let oneDayButton = <button onClick={this.doHandle1D}>1D</button>
+    let fiveDayButton = <button onClick={this.doHandle5D}>5D</button>
+    let oneMonthButton = <button onClick={this.doHandle1M}>1M</button>
+
     switch (this.state.source) {
       case "all":
         allButton = <button className="selected" onClick={this.doHandleAll}>All</button>
@@ -222,6 +230,18 @@ class BarChart extends Component {
         instagramButton = <button className="selected" onClick={this.doHandleInstagram}>Instagram</button>
         break
     };
+
+    switch (this.state.dayView) {
+      case "1D":  
+        oneDayButton = <button className="selected" onClick={this.doHandle1D}>1D</button>
+        break
+      case "5D":
+        fiveDayButton = <button className="selected" onClick={this.doHandle5D}>5D</button>
+        break
+      case "1M":
+        oneMonthButton = <button className="selected" onClick={this.doHandle1M}>1M</button>
+        break
+    };
     
       if (this.props.memeId) {
         return <div className="chart">
@@ -229,6 +249,7 @@ class BarChart extends Component {
           Meme popularity  
         </div>
         {allButton}{redditButton}{facebookButton}{instagramButton}
+        <div>{oneDayButton}{fiveDayButton}{oneMonthButton}</div>
       </div>
 
       } else {
