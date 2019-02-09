@@ -92,7 +92,7 @@ export const getTrending = async () => {
 // [timestamps] interval -> { timestamp, count }
 // an interval can be one of:
 // Hour, Day, Month
-export const getPlotPoints = async (timestamps, interval) => {
+export const getPlotPoints = (timestamps, interval) => {
   // sort timestamps
   const sortedTimes = timestamps.map(date => new Date(date)).sort((date1, date2) => {
       if (date1 < date2) {

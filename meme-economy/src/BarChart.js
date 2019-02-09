@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import * as d3 from "d3";
-import helper, { getGraph, getGraphBySite } from './database/helper';
+import helper, { getGraph, getGraphBySite, getPlotPoints } from './database/helper';
 import { connect } from 'react-redux';
 
 
 class BarChart extends Component {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     compare(a,b) {
         let comparison = 0;
@@ -19,22 +20,27 @@ class BarChart extends Component {
 
 =======
   constructor({memeId, site}) {
+=======
+  constructor(props) {
+>>>>>>> Redux Working
     super(props);
-    let memeId = props.memeId;
-    let site = props.site;
-    this.state = { plotPoints: []}
   }
   componentDidMount() {
-    getGraph().then(result => {
-      this.setState({plotPoints: massage(result)});
-      this.drawChart();
-    })
-    .then(result => this.drawChart)
-    .catch(err => console.log(err));
+    getGraph(this.props.memeId).then(result => {
+      console.log(result)
+      this.drawChart(getPlotPoints(result, 'hour'))
+    }
+    )
+    .catch (err => console.log(err));
   }
+<<<<<<< HEAD
 >>>>>>> Adding in redux
     drawChart() {
   
+=======
+    drawChart(plotPoints) {
+      console.log(plotPoints);
+>>>>>>> Redux Working
       // 2. Use the margin convention practice 
       var margin = {top: 30, right: 30, bottom: 50, left: 50}
       , width = (window.innerWidth * .55) - margin.left - margin.right // Use the window's width 
@@ -244,7 +250,7 @@ class BarChart extends Component {
   
 
   render(){
-      return <div className="chart">Meme popularity over time</div>
+      return <div className="chart">Meme popularity over time{this.props.memeId}</div>
     }
 }
 
