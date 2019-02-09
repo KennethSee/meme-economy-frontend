@@ -353,7 +353,7 @@ class BarChart extends Component {
             svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
-            .call(d3.axisBottom(xScale).ticks(10).tickFormat(d3.timeFormat("%m-%b"))); // Create an axis component with d3.axisBottom
+            .call(d3.axisBottom(xScale).ticks(10).tickFormat(d3.timeFormat("%d-%b"))); // Create an axis component with d3.axisBottom
 
             // 4. Call the y axis in a group tag
             svg.append("g")
