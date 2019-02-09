@@ -40,6 +40,11 @@ code {
   stroke-width: 1.5px;
 }
 
+.dot {
+  fill: #ffab00;
+  stroke: #fff;
+}
+
 .axis path,
 .axis line {
   fill: none;

@@ -4,7 +4,8 @@ import BarChart from './BarChart';
 import NavBar from './NavBar'
 import PopUp from './PopUp';
 import { getMemeUrl, getGraph, getGraphBySite, getTrending, getPlotPoints } from './database/helper';
-import Ticker from './Ticker'
+import Ticker from './Ticker';
+import VisibleTrending from './Trending';
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto');
@@ -73,14 +74,6 @@ const PageWrapper = styled.div`
   height: 100%;
 `;
 
-const Trending = styled.div`
-  width: 40%;
-  border-right: 1px solid black;
-  height: 100%;
-  font-size: 30px;
-  float: left;
-`;
-
 class Page extends Component {
   render() {
     return (
@@ -89,7 +82,7 @@ class Page extends Component {
         <NavBar></NavBar>
         <Ticker></Ticker>
         <PageWrapper>
-          <Trending> Trending</Trending>
+          <VisibleTrending />
           <BarChart></BarChart>
           <button onClick={this.handleClick}>hello</button>
         </PageWrapper>
