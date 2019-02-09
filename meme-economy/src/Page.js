@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import BarChart from './BarChart';
 import NavBar from './NavBar'
 import PopUp from './PopUp';
-import Ticker from './Ticker'
 import { getMemeUrl, getGraph, getGraphBySite, getTrending, getPlotPoints } from './database/helper';
+import Ticker from './Ticker'
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto');
@@ -104,8 +104,11 @@ class Page extends Component {
     console.log(graph);
     const memesToHits = await getTrending();
     console.log(memesToHits);
+<<<<<<< HEAD
     const sortedTimes = await getPlotPoints(graph, "month");
     console.log(sortedTimes);
+=======
+>>>>>>> added stuff
   }
 }
 
