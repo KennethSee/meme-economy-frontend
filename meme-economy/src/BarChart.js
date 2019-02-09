@@ -88,21 +88,6 @@ class BarChart extends Component {
         .attr("cy", function(d) { return yScale(d.y) })
         .attr("r", 5);
 
-    //   const data = [120, 50, 60, 60, 90, 100];
-        
-    //   const svg = d3.select(".chart").append("svg").attr("width", 700).attr("height", 300);
-
-    //   console.log(svg)
-
-    // svg.selectAll("rect")
-    // .data(data)
-    // .enter()
-    // .append("rect")
-    // .attr("x", (d, i) => i * 70)
-    // .attr("y", 0)
-    // .attr("width", 25)
-    // .attr("height", (d, i) => d)
-    // .attr("fill", "green");
       
     }
   
@@ -111,7 +96,7 @@ class BarChart extends Component {
     }
 
     render(){
-        return <div className="chart" id={"#" + this.props.id}>Chart</div>
+        return <div className="chart" id={"#" + this.props.id}>Meme popularity over time</div>
       }
   }
   

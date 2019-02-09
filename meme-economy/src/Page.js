@@ -47,7 +47,6 @@ const Trending = styled.div`
   float: left;
 `;
 
-
 class Page extends Component {
   render() {
     return (
