@@ -63,3 +63,29 @@ code {
   fill: none;
   stroke: steelblue;
 }
+
+.popup_title {
+  height: 60px;
+  font-size: 25px;
+  background-color: #B4B4B4;
+  line-height: 60px;
+}
+
+.popup_content {
+  height: 20px;
+  font-size: 20px;
+  width: 100%;
+  vertical-align: text-top;
+}
+
+.popup_title ~ div {
+  height: 50px;
+  line-height: 50px;
+}
+
+.popup_image {
+  height: auto; 
+  width: auto; 
+  max-width: 50px; 
+  max-height: 50px;
+}

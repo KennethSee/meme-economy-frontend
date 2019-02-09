@@ -2,7 +2,8 @@ import styled, { createGlobalStyle } from 'styled-components';
 import React, { Component } from 'react';
 import BarChart from './BarChart';
 import { hello } from './database/helper';
-import Ticker from './Ticker'
+import Ticker from './Ticker';
+import PopUp from './PopUp';
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto');
@@ -60,6 +61,7 @@ class Page extends Component {
           <Trending> Trending</Trending>
           <BarChart></BarChart>
           <button onClick={this.handleClick}>hello</button>
+          <PopUp></PopUp>
         </PageWrapper>
       </GlobalWrapper>
     );
