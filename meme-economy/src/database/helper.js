@@ -45,9 +45,17 @@ export const getGraphBySite = async (memeId, site) => {
 // -> [memes]
 export const getTrending = async () => {
   const data = await getAllHits();
+  const yesterday = new Date(Date.now() - 864e5);
+
   const memesToHits = data["data"].reduce(
     (acc, hit) => {
       if (hit == null) {
+        return acc;
+      }
+
+      const hitTime = new Date(hit["timestamp"]);
+      console.log(hitTime);
+      if (hitTime < yesterday) {
         return acc;
       }
 
@@ -67,17 +75,17 @@ export const getTrending = async () => {
 
   const memeList = memes["data"].map(meme => new Meme(meme["id"], meme["url"], meme["tags"]));
 
-  const sortedMemes = memeList.sort((meme1, meme2) => memesToHits[meme1.memeId] - memesToHits[meme2.memeId])
+  const sortedMemes = memeList.sort((meme1, meme2) => {
+    if (memesToHits[meme1.memeId] == null) {
+      return 1;
+    } else if (memesToHits[meme2.memeId] == null) {
+      return -1;
+    } else {
+      return memesToHits[meme2.memeId] - memesToHits[meme1.memeId]
+    }
+  });
 
-  console.log(sortedMemes);
-
-  console.log(memeList);
-
-  //return sortedMemes.map(meme => await 
-
-  //memesToHitsList.sort((tuple1, tuple2) => tuple1[1] - tuple2[1]);
-
-  //console.log(memesToHitsList);
+  return sortedMemes;
   
 }
 
