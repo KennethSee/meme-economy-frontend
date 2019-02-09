@@ -6,7 +6,7 @@ class BarChart extends Component {
     drawChart() {
     
         // 2. Use the margin convention practice 
-        var margin = {top: 30, right: 30, bottom: 30, left: 30}
+        var margin = {top: 30, right: 30, bottom: 50, left: 50}
         , width = (window.innerWidth * .55) - margin.left - margin.right // Use the window's width 
         , height = (window.innerHeight * .55) - margin.top - margin.bottom; // Use the window's height
 
@@ -51,12 +51,29 @@ class BarChart extends Component {
         .attr("class", "y axis")
         .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
 
+        // Add X axis label
+        svg.append("text")
+        .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+        .style("text-anchor", "middle")
+        .text("Time")
+        .style("font", "14px Roboto");
+
+        // Add Y axis label
+        svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x",0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .style("font", "14px Roboto")
+        .text("Number of hits")
+
         // 9. Append the path, bind the data, and call the line generator 
         var path = svg.append("path")
         .datum(dataset) // 10. Binds data to the line 
         .attr("class", "line") // Assign a class for styling 
         .attr("d", line); // 11. Calls the line generator 
-
+      
         var totalLength = path.node().getTotalLength();
 
         path
@@ -75,6 +92,7 @@ class BarChart extends Component {
         // .attr("cx", function(d, i) { return xScale(i) })
         // .attr("cy", function(d) { return yScale(d.y) })
         // .attr("r", 5);
+
       }
       
     componentDidMount() {
@@ -82,7 +100,7 @@ class BarChart extends Component {
     }
 
     render(){
-        return <div className="chart">Chart</div>
+        return <div className="chart">Meme popularity over time</div>
       }
   }
   
