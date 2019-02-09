@@ -1,6 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import React, { Component } from 'react';
 import BarChart from './BarChart';
+import { hello } from './database/helper';
 import Ticker from './Ticker'
 
 const GlobalStyle = createGlobalStyle`
@@ -58,9 +59,14 @@ class Page extends Component {
         <PageWrapper>
           <Trending> Trending</Trending>
           <BarChart></BarChart>
+          <button onClick={this.handleClick}>hello</button>
         </PageWrapper>
       </GlobalWrapper>
     );
+  }
+  
+  handleClick() {
+    hello();
   }
 }
 
