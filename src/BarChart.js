@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import * as d3 from "d3";
 import helper, { getGraph, getGraphBySite, getPlotPoints } from './database/helper';
 import { connect } from 'react-redux';
+import { networkInterfaces } from 'os';
 
 
 class BarChart extends Component {
@@ -17,7 +18,7 @@ class BarChart extends Component {
     };
 
   componentDidMount() {
-    getGraph(this.props.memeId).then(result => {
+    getGraphthis.props.memeId).then(result => {
       //console.log(result)
       this.drawChart(getPlotPoints(result, 'hour'))
     }
@@ -26,12 +27,17 @@ class BarChart extends Component {
   }
   
     drawChart(plotPoints) {
-      console.log(plotPoints);
-      
+      // console.log(plotPoints);
+      let d = new Date();
+      let today = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+      let relevantPlotPoints = plotPoints.filter((points) => {
+        return points.x.getDate() == today.getDate();
+      });
+      console.log(relevantPlotPoints);
 
         // 2. Use the margin convention practice 
         var margin = {top: 30, right: 30, bottom: 50, left: 50}
-        , width = (window.innerWidth * .55) - margin.left - margin.right // Use the window's width 
+        , width = (window.innerWidth * .60) - margin.left - margin.right // Use the window's width 
         , height = (window.innerHeight * .55) - margin.top - margin.bottom; // Use the window's height
 
         // 5. X scale will use the index of our data
@@ -42,19 +48,22 @@ class BarChart extends Component {
         // var xScale = d3.scaleTime()
         // .domain([0, 15])
         // .range([0, width]);
-        let dataset = plotPoints.sort(this.compare)
+        let dataset = relevantPlotPoints.sort(this.compare)
         // The number of datapoints
         var n = dataset.length;
-        console.log(dataset);
+        // console.log(dataset);
 
         var xScale = d3.scaleTime()
         .domain([dataset[0].x, dataset[dataset.length - 1].x])
         .nice(d3.timeDay)
         .range([0, width]);
 
-        // 6. Y scale will use the randomly generate number 
+        let max_y = Math.max.apply(Math,(dataset.map((point) => point.y)));
+        console.log(max_y);
+
+        // 6. Y scale will use the input data 
         var yScale = d3.scaleLinear()
-        .domain([0, 15]) // input 
+        .domain([0, max_y + 1])
         .range([height, 0]); // output 
 
         // 7. d3's line generator
