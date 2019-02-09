@@ -7,6 +7,16 @@ import { networkInterfaces } from 'os';
 
 class BarChart extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {source: ""};
+
+    this.doHandleAll = this.doHandleAll.bind(this);
+    this.doHandleReddit = this.doHandleReddit.bind(this);
+    this.doHandleFacebook = this.doHandleFacebook.bind(this);
+    this.doHandleInstagram = this.doHandleInstagram.bind(this);
+  }
+
     compare(a,b) {
         let comparison = 0;
         if (a.x > b.x) {
@@ -20,11 +30,31 @@ class BarChart extends Component {
   componentDidUpdate() {
     d3.select("svg").remove();
     console.log("mount");
-    getGraph(this.props.memeId).then(result => {
-      //console.log(result)
-      this.drawChart(getPlotPoints(result, 'hour'))
-    })
-    .catch (err => console.log(err));
+    if (this.state.source == "") {
+      getGraph(this.props.memeId).then(result => {
+        //console.log(result)
+        this.drawChart(getPlotPoints(result, 'hour'))
+      })
+      .catch (err => console.log(err));
+    } else if (this.state.source == "reddit") {
+      getGraphBySite(this.props.memeId,"reddit").then(result => {
+        console.log(result)
+        this.drawChart(getPlotPoints(result, 'hour'))
+      })
+      .catch (err => console.log(err));
+    } else if (this.state.source == "facebook") {
+      getGraphBySite(this.props.memeId,"facebook").then(result => {
+        console.log(result)
+        this.drawChart(getPlotPoints(result, 'hour'))
+      })
+      .catch (err => console.log(err));
+    } else if (this.state.source == "instagram") {
+      getGraphBySite(this.props.memeId,"instagram").then(result => {
+        console.log(result)
+        this.drawChart(getPlotPoints(result, 'hour'))
+      })
+      .catch (err => console.log(err));
+    };
   }
   
     drawChart(plotPoints) {
@@ -146,10 +176,39 @@ class BarChart extends Component {
       
 
   
+      doHandleAll() {
+        this.setState({
+          source: ""
+        })
+      };
+
+      doHandleReddit() {
+        this.setState({
+          source: "reddit"
+        })
+      };
+
+      doHandleFacebook() {
+        this.setState({
+          source: "facebook"
+        })
+      };
+
+      doHandleInstagram() {
+        this.setState({
+          source: "Instagram"
+        })
+      };
 
   render(){
     console.log("rendered");
-      return <div className="chart">Meme popularity over time{this.props.memeId}</div>
+      return <div>
+      <div className="chart">Meme popularity over time{this.props.memeId}</div>
+        <button onClick={this.doHandleAll}>All</button>
+        <button onClick={this.doHandleReddit}>Reddit</button>
+        <button onClick={this.doHandleFacebook}>Facebook</button>
+        <button onClick={this.doHandleInstagram}>Instagram</button>
+      </div>
     }
 }
 
