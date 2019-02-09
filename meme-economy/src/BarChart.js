@@ -3,34 +3,55 @@ import * as d3 from "d3";
 
 class BarChart extends Component {
 
+    compare(a,b) {
+        let comparison = 0;
+        if (a.x > b.x) {
+            comparison = 1;
+        } else if (a.x < b.x) {
+            comparison = -1;
+        }
+        return comparison;
+    };
+
     drawChart() {
     
+        // The number of datapoints
+        var n = 5;
+
         // 2. Use the margin convention practice 
         var margin = {top: 30, right: 30, bottom: 50, left: 50}
         , width = (window.innerWidth * .55) - margin.left - margin.right // Use the window's width 
         , height = (window.innerHeight * .55) - margin.top - margin.bottom; // Use the window's height
 
-        // The number of datapoints
-        var n = 21;
-
         // 5. X scale will use the index of our data
-        var xScale = d3.scaleLinear()
-        .domain([0, n-1]) // input
-        .range([0, width]); // output
+        // var xScale = d3.scaleLinear()
+        // .domain([0, 15]) // input
+        // .range([0, width]); // output
+
+        // var xScale = d3.scaleTime()
+        // .domain([0, 15])
+        // .range([0, width]);
+
+        var xScale = d3.scaleTime()
+        .domain([new Date, new Date])
+        .nice(d3.timeDay)
+        .range([0, width]);
 
         // 6. Y scale will use the randomly generate number 
         var yScale = d3.scaleLinear()
-        .domain([0, 1]) // input 
+        .domain([0, 15]) // input 
         .range([height, 0]); // output 
 
         // 7. d3's line generator
         var line = d3.line()
-        .x(function(d, i) { return xScale(i); }) // set the x values for the line generator
+        .x(function(d) { return xScale(d.x); }) // set the x values for the line generator
         .y(function(d) { return yScale(d.y); }) // set the y values for the line generator 
         // .curve(d3.curveMonotoneX) // apply smoothing to the line
 
         // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
-        var dataset = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)() } })
+        //var dataset = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)() } })
+        let dataset_unsorted = [{x:3,y:2},{x:2,y:1},{x:5,y:2},{x:1,y:10},{x:4,y:2}, {x:10,y:10}];
+        let dataset = dataset_unsorted.sort(this.compare)
         console.log(dataset);
 
         // 1. Add the SVG to the page and employ #2
@@ -40,11 +61,15 @@ class BarChart extends Component {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+        // svg.append("g")
+        // .attr("transform", "translate(5,0)")
+        // .call(d3.svg.axis().scale(xScale).ticks(24).tickFormat(d3.timeFormat("%H:%M")));
+
         // 3. Call the x axis in a group tag
         svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
-        .call(d3.axisBottom(xScale)); // Create an axis component with d3.axisBottom
+        .call(d3.axisBottom(xScale).ticks(12).tickFormat(d3.timeFormat("%H:%M"))); // Create an axis component with d3.axisBottom
 
         // 4. Call the y axis in a group tag
         svg.append("g")
