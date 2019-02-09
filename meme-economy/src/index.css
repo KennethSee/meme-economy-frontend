@@ -17,3 +17,16 @@ code {
   width: 60%;
   float: right;
 }
+
+.ticker {
+  height: 40px;
+  background-color: black;
+  color: white;
+  font-size: 20px;
+}
+
+.ticker .ticking {
+  position: absolute;
+  left: 0;
+  width: 60px;
+}
