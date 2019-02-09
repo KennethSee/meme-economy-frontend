@@ -2,6 +2,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import React, { Component } from 'react';
 import BarChart from './BarChart';
 import { hello } from './database/helper';
+import Ticker from './Ticker'
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto');
@@ -54,6 +55,7 @@ class Page extends Component {
       <GlobalWrapper>
         <GlobalStyle />
         <NavBar>The Meme Economy</NavBar>
+        <Ticker></Ticker>
         <PageWrapper>
           <Trending> Trending</Trending>
           <BarChart></BarChart>
