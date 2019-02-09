@@ -18,7 +18,7 @@ class BarChart extends Component {
     };
 
   componentDidMount() {
-    getGraphthis.props.memeId).then(result => {
+    getGraph(this.props.memeId).then(result => {
       //console.log(result)
       this.drawChart(getPlotPoints(result, 'hour'))
     }
