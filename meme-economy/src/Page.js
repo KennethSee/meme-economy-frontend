@@ -1,6 +1,7 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import React, { Component } from 'react';
 import BarChart from './BarChart';
+import { hello } from './database/helper';
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto');
@@ -47,7 +48,6 @@ const Trending = styled.div`
   float: left;
 `;
 
-
 class Page extends Component {
   render() {
     return (
@@ -57,9 +57,14 @@ class Page extends Component {
         <PageWrapper>
           <Trending> Trending</Trending>
           <BarChart></BarChart>
+          <button onClick={this.handleClick}>hello</button>
         </PageWrapper>
       </GlobalWrapper>
     );
+  }
+  
+  handleClick() {
+    hello();
   }
 }
 
