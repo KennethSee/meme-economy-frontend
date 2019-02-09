@@ -69,29 +69,38 @@ class BarChart extends Component {
         .text("Number of hits")
 
         // 9. Append the path, bind the data, and call the line generator 
-        svg.append("path")
+        var path = svg.append("path")
         .datum(dataset) // 10. Binds data to the line 
         .attr("class", "line") // Assign a class for styling 
         .attr("d", line); // 11. Calls the line generator 
+      
+        var totalLength = path.node().getTotalLength();
+
+        path
+        .attr("stroke-dasharray", totalLength + " " + totalLength)
+        .attr("stroke-dashoffset", totalLength)
+        .transition() // Call Transition Method
+        .duration(5000) // Set Duration timing (ms)
+        .ease(d3.easeLinear) // Set Easing option
+        .attr("stroke-dashoffset", 0);
 
         // 12. Appends a circle for each datapoint 
-        svg.selectAll(".dot")
-        .data(dataset)
-        .enter().append("circle") // Uses the enter().append() method
-        .attr("class", "dot") // Assign a class for styling
-        .attr("cx", function(d, i) { return xScale(i) })
-        .attr("cy", function(d) { return yScale(d.y) })
-        .attr("r", 5);
+        // svg.selectAll(".dot")
+        // .data(dataset)
+        // .enter().append("circle") // Uses the enter().append() method
+        // .attr("class", "dot") // Assign a class for styling
+        // .attr("cx", function(d, i) { return xScale(i) })
+        // .attr("cy", function(d) { return yScale(d.y) })
+        // .attr("r", 5);
 
+      }
       
-    }
-  
     componentDidMount() {
       this.drawChart();
     }
 
     render(){
-        return <div className="chart" id={"#" + this.props.id}>Meme popularity over time</div>
+        return <div className="chart">Meme popularity over time</div>
       }
   }
   

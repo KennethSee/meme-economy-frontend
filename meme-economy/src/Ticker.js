@@ -4,7 +4,7 @@ class Ticker extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {left: -60};
+    this.state = {left: -120};
   }
 
   componentDidMount() {
@@ -23,7 +23,7 @@ class Ticker extends Component {
   render() {
     return (
         <div className="ticker">
-          <div style={this.state} className="ticking">Boom</div>
+          <div style={this.state} className="ticking">Buy Buy Buy!</div>
         </div>
     );
   }
