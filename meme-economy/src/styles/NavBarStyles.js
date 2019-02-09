@@ -5,9 +5,16 @@ const NavBar = styled.div`
   border-bottom: 1px solid black;
   font-style: italic;
   padding: 0 20px;
+
+  .search {
+    float: right;
+    position: relative;
+    height: 100px;
+    width: 250px;
+  }
   
   input[type=text] {
-    float: right;
+    position: absolute;
     padding: 6px;
     margin-top: 34px;
     font-size: 17px;
@@ -16,14 +23,16 @@ const NavBar = styled.div`
   }
 
   button[type=submit] {
-    float: right;
+    position: absolute;
     cursor: pointer;
     margin-top: 34px;
+    left: -38px;
     padding: 3.5px 6px 3.5px 10px;
     border-radius: 10px 0 0 10px;
     background-color: #ddd;
     font-size: 17px;
     border: none;
+    top: 0;
     transition: .5s background-color ease-out;
   }
 
@@ -32,7 +41,11 @@ const NavBar = styled.div`
   }
 
   button[type=submit]:hover {
-    background-color: #ccc;
+    background-color: #666;
+  }
+
+  button[type=submit]:active {
+    top: 1px;
   }
 `;
 

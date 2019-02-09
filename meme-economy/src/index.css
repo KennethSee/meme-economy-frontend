@@ -31,8 +31,7 @@ code {
 .ticker .ticking {
   position: absolute;
   left: 0;
-  width: auto;
-  font-family: LCD_Solid;
+  width: 120px;
 }
 
 .line {
