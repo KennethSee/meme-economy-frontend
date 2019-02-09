@@ -4,6 +4,7 @@ import BarChart from './BarChart';
 import { hello } from './database/helper';
 import Ticker from './Ticker';
 import NavBar from './NavBar'
+import PopUp from './PopUp';
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto');
