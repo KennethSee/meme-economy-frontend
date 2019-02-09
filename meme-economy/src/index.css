@@ -15,6 +15,9 @@ code {
 
 .chart {
   width: 60%;
+  border-right: 1px solid black;
+  height: 100%;
+  font-size: 30px;
   float: right;
 }
 
