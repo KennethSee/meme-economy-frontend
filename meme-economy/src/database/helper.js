@@ -106,9 +106,9 @@ export const getPlotPoints = (timestamps, interval) => {
   const timesToHits = sortedTimes.reduce((acc, timestamp) => {
     let smolTimestamp = new Date();
     if (interval === "hour") {
-      smolTimestamp = new Date(timestamp.getFullYear(), timestamp.getMonth(), timestamp.getDay(), timestamp.getHours());
+      smolTimestamp = new Date(timestamp.getFullYear(), timestamp.getMonth(), timestamp.getDate(), timestamp.getHours());
     } else if (interval === "day") {
-      smolTimestamp = new Date(timestamp.getFullYear(), timestamp.getMonth(), timestamp.getDay());
+      smolTimestamp = new Date(timestamp.getFullYear(), timestamp.getMonth(), timestamp.getDate());
     } else {
       smolTimestamp = new Date(timestamp.getFullYear(), timestamp.getMonth());
     }

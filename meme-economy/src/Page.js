@@ -102,18 +102,6 @@ class Page extends Component {
     console.log(url);
     const graph = await getGraph("48e8d382-24f6-4fb7-9d3f-b11c94cf9b34");
     console.log(graph);
-    const memesToHits = await getTrending();
-    console.log(memesToHits);
-<<<<<<< HEAD
-<<<<<<< HEAD
-    const sortedTimes = await getPlotPoints(graph, "month");
-    console.log(sortedTimes);
-=======
->>>>>>> added stuff
-=======
-    const sortedTimes = await getPlotPoints(graph, "month");
-    console.log(sortedTimes);
->>>>>>> Added getplotpoints helper for graphing
   }
 }
 
