@@ -1,10 +1,5 @@
 import React, { Component } from 'react';
 import * as d3 from "d3";
-import styled from 'styled-components';
-
-// const BarChart = styled.div`
-//   width: 60%;
-// `;
 
 class BarChart extends Component {
 
