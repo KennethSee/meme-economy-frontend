@@ -50,7 +50,12 @@ class BarChart extends Component {
 
         // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
         //var dataset = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)() } })
-        let dataset_unsorted = [{x:3,y:2},{x:2,y:1},{x:5,y:2},{x:1,y:10},{x:4,y:2}, {x:10,y:10}];
+        let dataset_unsorted = [
+            {x: new Date('Sat Feb 09 2019 08:00:00 GMT-0500 (Eastern Standard Time)'), y: 1}, 
+            {x: new Date('Sat Feb 09 2019 10:00:00 GMT-0500 (Eastern Standard Time)'), y: 5}, 
+            {x: new Date('Sat Feb 09 2019 17:00:00 GMT-0500 (Eastern Standard Time)'), y: 7}, 
+            {x: new Date('Sat Feb 09 2019 12:00:00 GMT-0500 (Eastern Standard Time)'), y: 10}, 
+            {x: new Date('Sat Feb 09 2019 13:00:00 GMT-0500 (Eastern Standard Time)'), y: 2}];
         let dataset = dataset_unsorted.sort(this.compare)
         console.log(dataset);
 
