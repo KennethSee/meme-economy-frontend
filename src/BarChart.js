@@ -97,7 +97,7 @@ class BarChart extends Component {
         // 4. Call the y axis in a group tag
         svg.append("g")
         .attr("class", "y axis")
-        .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
+        .call(d3.axisLeft(yScale).ticks(max_y).tickFormat(d3.format(".0f"))); // Create an axis component with d3.axisLeft
 
         // Add X axis label
         svg.append("text")
