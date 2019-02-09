@@ -105,10 +105,15 @@ class Page extends Component {
     const memesToHits = await getTrending();
     console.log(memesToHits);
 <<<<<<< HEAD
+<<<<<<< HEAD
     const sortedTimes = await getPlotPoints(graph, "month");
     console.log(sortedTimes);
 =======
 >>>>>>> added stuff
+=======
+    const sortedTimes = await getPlotPoints(graph, "month");
+    console.log(sortedTimes);
+>>>>>>> Added getplotpoints helper for graphing
   }
 }
 
