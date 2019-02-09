@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import * as d3 from "d3";
+import helper, { getGraph, getGraphBySite, getPlotPoints } from './database/helper';
+import { connect } from 'react-redux';
+
 
 class BarChart extends Component {
 
@@ -13,10 +16,18 @@ class BarChart extends Component {
         return comparison;
     };
 
-    drawChart() {
-    
-        // The number of datapoints
-        var n = 5;
+  componentDidMount() {
+    getGraph(this.props.memeId).then(result => {
+      //console.log(result)
+      this.drawChart(getPlotPoints(result, 'hour'))
+    }
+    )
+    .catch (err => console.log(err));
+  }
+  
+    drawChart(plotPoints) {
+      console.log(plotPoints);
+      
 
         // 2. Use the margin convention practice 
         var margin = {top: 30, right: 30, bottom: 50, left: 50}
@@ -31,9 +42,13 @@ class BarChart extends Component {
         // var xScale = d3.scaleTime()
         // .domain([0, 15])
         // .range([0, width]);
+        let dataset = plotPoints.sort(this.compare)
+        // The number of datapoints
+        var n = dataset.length;
+        console.log(dataset);
 
         var xScale = d3.scaleTime()
-        .domain([new Date, new Date])
+        .domain([dataset[0].x, dataset[dataset.length - 1].x])
         .nice(d3.timeDay)
         .range([0, width]);
 
@@ -50,14 +65,7 @@ class BarChart extends Component {
 
         // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
         //var dataset = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)() } })
-        let dataset_unsorted = [
-            {x: new Date('Sat Feb 09 2019 08:00:00 GMT-0500 (Eastern Standard Time)'), y: 1}, 
-            {x: new Date('Sat Feb 09 2019 10:00:00 GMT-0500 (Eastern Standard Time)'), y: 5}, 
-            {x: new Date('Sat Feb 09 2019 17:00:00 GMT-0500 (Eastern Standard Time)'), y: 7}, 
-            {x: new Date('Sat Feb 09 2019 12:00:00 GMT-0500 (Eastern Standard Time)'), y: 10}, 
-            {x: new Date('Sat Feb 09 2019 13:00:00 GMT-0500 (Eastern Standard Time)'), y: 2}];
-        let dataset = dataset_unsorted.sort(this.compare)
-        console.log(dataset);
+        
 
         // 1. Add the SVG to the page and employ #2
         var svg = d3.select(".chart").append("svg")
@@ -126,13 +134,22 @@ class BarChart extends Component {
 
       }
       
-    componentDidMount() {
-      this.drawChart();
-    }
 
-    render(){
-        return <div className="chart">Meme popularity over time</div>
-      }
-  }
   
-  export default BarChart;
+
+  render(){
+      return <div className="chart">Meme popularity over time{this.props.memeId}</div>
+    }
+}
+
+
+const mapStateToProps = state => ({
+  memeId: state.memeId,
+  siteId: state.siteId
+})
+
+
+
+export default connect(
+  mapStateToProps
+)(BarChart);

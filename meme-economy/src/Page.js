@@ -1,10 +1,10 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import React, { Component } from 'react';
 import BarChart from './BarChart';
-import { hello } from './database/helper';
-import Ticker from './Ticker';
 import NavBar from './NavBar'
 import PopUp from './PopUp';
+import { getMemeUrl, getGraph, getGraphBySite, getTrending, getPlotPoints } from './database/helper';
+import Ticker from './Ticker'
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto');
@@ -97,8 +97,11 @@ class Page extends Component {
     );
   }
   
-  handleClick() {
-    hello();
+  async handleClick() {
+    const url = await getMemeUrl("48e8d382-24f6-4fb7-9d3f-b11c94cf9b34");
+    console.log(url);
+    const graph = await getGraph("48e8d382-24f6-4fb7-9d3f-b11c94cf9b34");
+    console.log(graph);
   }
 }
 
