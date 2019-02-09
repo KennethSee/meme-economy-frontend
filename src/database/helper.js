@@ -54,7 +54,7 @@ export const getTrending = async () => {
       }
 
       const hitTime = new Date(hit["timestamp"]);
-      console.log(hitTime);
+      // console.log(hitTime);
       if (hitTime < yesterday) {
         return acc;
       }
@@ -112,7 +112,7 @@ export const getPlotPoints = (timestamps, interval) => {
     } else {
       smolTimestamp = new Date(timestamp.getFullYear(), timestamp.getMonth());
     }
-    console.log(smolTimestamp);
+    // console.log(smolTimestamp);
 
     if (acc.length == 0 || acc[0].x.getTime() !== smolTimestamp.getTime()) {
       acc.unshift({ x: smolTimestamp, y: 1 });
