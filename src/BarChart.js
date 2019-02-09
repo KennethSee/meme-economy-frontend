@@ -158,8 +158,7 @@ class BarChart extends Component {
         .attr("stroke-dasharray", totalLength + " " + totalLength)
         .attr("stroke-dashoffset", totalLength)
         .transition() // Call Transition Method
-        .delay(1000)
-        .duration(7000) // Set Duration timing (ms)
+        .duration(4000) // Set Duration timing (ms)
         .ease(d3.easeCubicOut) // Set Easing option
         .attr("stroke-dashoffset", 0);
 
@@ -168,7 +167,7 @@ class BarChart extends Component {
         .data(dataset)
         .enter().append("circle") // Uses the enter().append() method
         .attr("class", "dot") // Assign a class for styling
-        .attr("cx", function(d, i) { return xScale(i) })
+        .attr("cx", function(d) { return xScale(d.x) })
         .attr("cy", function(d) { return yScale(d.y) })
         .attr("r", 5);
 
@@ -202,13 +201,21 @@ class BarChart extends Component {
 
   render(){
     console.log("rendered");
-      return <div>
-      <div className="chart">Meme popularity over time{this.props.memeId}</div>
+    console.log(this.props.memeId);  
+    
+      if (this.props.memeId) {
+        return <div className="chart">
+        <div>
+          Meme popularity  
+        </div>
         <button onClick={this.doHandleAll}>All</button>
         <button onClick={this.doHandleReddit}>Reddit</button>
         <button onClick={this.doHandleFacebook}>Facebook</button>
         <button onClick={this.doHandleInstagram}>Instagram</button>
       </div>
+      } else {
+        return <div></div>
+      }
     }
 }
 

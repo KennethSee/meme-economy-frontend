@@ -21,6 +21,10 @@ code {
   float: right;
 }
 
+.chart div {
+  width: 100%;
+}
+
 .ticker {
   height: 40px;
   background-color: black;
@@ -36,12 +40,12 @@ code {
 
 .line {
   fill: none;
-  stroke: steelblue;
+  stroke: green;
   stroke-width: 1.5px;
 }
 
 .dot {
-  fill: #ffab00;
+  fill: green;
   stroke: #fff;
 }
 
@@ -59,7 +63,7 @@ code {
 
 .focus circle {
   fill: none;
-  stroke: steelblue;
+  stroke: green;
 }
 
 .popup_title {

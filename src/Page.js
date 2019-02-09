@@ -71,7 +71,7 @@ const GlobalWrapper = styled.div`
 `;
 
 const PageWrapper = styled.div`
-  height: 100%;
+  height: calc(100% - 141px);
 `;
 
 class Page extends Component {
@@ -84,7 +84,6 @@ class Page extends Component {
         <PageWrapper>
           <VisibleTrending />
           <BarChart></BarChart>
-          <button onClick={this.handleClick}>hello</button>
         </PageWrapper>
       </GlobalWrapper>
     );
