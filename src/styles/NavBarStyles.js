@@ -5,12 +5,19 @@ const NavBar = styled.div`
   border-bottom: 1px solid black;
   font-style: italic;
   padding: 0 20px;
+  height: 149px;
 
   .search {
     float: right;
     position: relative;
     height: 100px;
     width: 250px;
+  }
+
+  .fileUploader {
+    width: 220px;
+    position: absolute;
+    left: -270px;
   }
   
   input[type=text] {

@@ -71,7 +71,7 @@ const GlobalWrapper = styled.div`
 `;
 
 const PageWrapper = styled.div`
-  height: calc(100% - 141px);
+  height: calc(100% - 189px);
 `;
 
 class Page extends Component {
