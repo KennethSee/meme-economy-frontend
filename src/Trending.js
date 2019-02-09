@@ -19,16 +19,12 @@ class Trending extends Component {
     .catch (err => console.log(err));
   }
   render() {
-
-    let memes = "";
-
+    var memes = [];
     if (this.state.memes && this.state.memes.length != 0) {
-      memes = <div>
-        <img onClick={() => this.props.onTileClick(this.state.memes[0].memeId)} 
-                       src={this.state.memes[0].source} alt="meme"></img>
-                       <img onClick={() => this.props.onTileClick(this.state.memes[1].memeId)} 
-                       src={this.state.memes[1].source} alt="meme"></img>
-                       </div>
+      for (let i = 0; i < 10; i++) {
+        memes.push(<img onClick={() => this.props.onTileClick(this.state.memes[i].memeId)} 
+        src={this.state.memes[i].source} alt="meme"></img>)
+      }
     }
 
     return (
@@ -36,7 +32,9 @@ class Trending extends Component {
         <div>
           Trending 
           <br/>
-          {memes}
+          <div>
+            {memes}
+          </div>
         </div>
       </TrendingStyles>
     );
