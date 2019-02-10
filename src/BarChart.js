@@ -156,10 +156,13 @@ class BarChart extends Component {
           var lineClass = "line"
           var dotClass = "dot"
 
-            if (dataset[0].y > dataset[dataset.length - 1].y) {
-              lineClass = "down-line";
-              dotClass = "down-dot";
-            }
+          if (dataset[0].y > dataset[dataset.length - 1].y) {
+            lineClass = "down-line";
+            dotClass = "down-dot";
+          } else if (dataset[0].y == dataset[dataset.length - 1].y){
+            lineClass = "even-line";
+            dotClass = "even-dot";
+          }
 
           // 9. Append the path, bind the data, and call the line generator 
           var path = svg.append("path")
@@ -277,10 +280,13 @@ class BarChart extends Component {
           var lineClass = "line"
           var dotClass = "dot"
 
-            if (dataset[0].y > dataset[dataset.length - 1].y) {
-              lineClass = "down-line";
-              dotClass = "down-dot";
-            }
+          if (dataset[0].y > dataset[dataset.length - 1].y) {
+            lineClass = "down-line";
+            dotClass = "down-dot";
+          } else if (dataset[0].y == dataset[dataset.length - 1].y){
+            lineClass = "even-line";
+            dotClass = "even-dot";
+          }
 
           // 9. Append the path, bind the data, and call the line generator 
           var path = svg.append("path")
@@ -401,6 +407,9 @@ class BarChart extends Component {
               if (dataset[0].y > dataset[dataset.length - 1].y) {
                 lineClass = "down-line";
                 dotClass = "down-dot";
+              } else if (dataset[0].y == dataset[dataset.length - 1].y){
+                lineClass = "even-line";
+                dotClass = "even-dot";
               }
 
             // 9. Append the path, bind the data, and call the line generator 
@@ -532,7 +541,8 @@ class BarChart extends Component {
 
       } else {
         return <div>
-          Welcome to the Meme Economy! The best place on the web to get up to date stats on the dankest memes.
+          Welcome to the Meme Economy!
+          <div className="subtitle">The best place on the web to get up to date stats on the dankest memes.</div>
         </div>
       }
       

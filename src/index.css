@@ -70,6 +70,7 @@ code {
 
 .even-dot {
   stroke: steelblue;
+  stroke: #fff;
 }
 
 .axis path,
@@ -132,5 +133,9 @@ code {
   z-index: 11;
   border-radius: 4px;
   background-color: rgba(0,0,0,.5);
-  /* -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5); */
+  -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+
+.subtitle {
+  font-size: 20px;
 }

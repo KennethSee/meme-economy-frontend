@@ -19,39 +19,30 @@ class Trending extends Component {
 
   componentDidMount() {
     getTrending().then(result => {
-      console.log("trending", result);
       this.setState({memes: result})
     })
     .catch (err => console.log(err));
   }
 
   select(e, i) {
-    console.log(i);
-    // console.log(e.target.style.border = "3px solid green");
     this.setState({memes: this.state.memes, selected: i})
     this.props.onTileClick(this.state.memes[i].memeId);
   }
 
   render() {
-
-    // const IMAGES = this.state.memes.map((meme) => {
-    //   console.log(meme);
-    //   return {src: meme.source, thumbnail: meme.source, thumbnailHeight: 50}
-    // })
-
     var memes = [];
     if (this.state.memes && this.state.memes.length !== 0) {
       for (let i = 0; i < 10; i++) {
         if (i === this.state.selected) {
           memes.push(
-            <div className="tile selected">
-              <img key={i} onClick={(e) => this.select(e, i)} 
+            <div key={this.state.memes[i].memeId} className="tile selected">
+              <img onClick={(e) => this.select(e, i)} 
                    src={this.state.memes[i].source} alt="meme"></img>
             </div>)
         } else {
           memes.push(
-            <div className="tile">
-              <img key={i} onClick={(e) => this.select(e, i)} 
+            <div key={this.state.memes[i].memeId} className="tile">
+              <img onClick={(e) => this.select(e, i)} 
                    src={this.state.memes[i].source} alt="meme"></img>
             </div>)
         }
@@ -61,11 +52,10 @@ class Trending extends Component {
     return (
       <TrendingStyles>
         <div className="title">
-          Trending 
+          Trending <span role="img" aria-label="up-and-to-the-right">📈</span>
         </div>
         <div className="meme-container">
           {memes}
-          {/* <Gallery images={IMAGES}/> */}
         </div>
       </TrendingStyles>
     );
