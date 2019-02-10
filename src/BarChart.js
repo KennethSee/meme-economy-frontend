@@ -3,6 +3,7 @@ import * as d3 from "d3";
 import helper, { getGraph, getGraphBySite, getPlotPoints } from './database/helper';
 import { connect } from 'react-redux';
 import { networkInterfaces } from 'os';
+import PopUp from './PopUp';
 
 
 class BarChart extends Component {
@@ -473,6 +474,10 @@ class BarChart extends Component {
         })
       };
 
+      handleClick() {
+        <PopUp></PopUp>;
+      };
+
   render(){
     let allButton = <button onClick={this.doHandleAll}>All</button>
     let redditButton = <button onClick={this.doHandleReddit}>Reddit</button>
@@ -522,6 +527,7 @@ class BarChart extends Component {
         <div className="btn-group">
           {oneDayButton}{fiveDayButton}{oneMonthButton}
         </div>
+        <button onClick={this.handleClick}>test</button>
       </div>
 
       } else {
@@ -529,6 +535,7 @@ class BarChart extends Component {
           Welcome to the Meme Economy! The best place on the web to get up to date stats on the dankest memes.
         </div>
       }
+      
     }
 }
 
