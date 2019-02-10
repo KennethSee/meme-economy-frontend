@@ -4,21 +4,13 @@ import { getGraph, getGraphBySite, getPlotPoints } from './database/helper';
 import { connect } from 'react-redux';
 import PopUp from './PopUp';
 
-
 class BarChart extends Component {
-
   constructor(props) {
     super(props);
     this.state = {source: "all platforms", dayView: "1 day"};
 
-    this.doHandleAll = this.doHandleAll.bind(this);
-    this.doHandleReddit = this.doHandleReddit.bind(this);
-    this.doHandleFacebook = this.doHandleFacebook.bind(this);
-    this.doHandleInstagram = this.doHandleInstagram.bind(this);
-
-    this.doHandle1D = this.doHandle1D.bind(this);
-    this.doHandle5D = this.doHandle5D.bind(this);
-    this.doHandle1M = this.doHandle1M.bind(this);
+    this.handleSource = this.handleSource.bind(this);
+    this.handleDayView = this.handleDayView.bind(this);
   }
 
     compare(a,b) {
@@ -457,7 +449,7 @@ class BarChart extends Component {
       if (this.props.memeId) {
         return (
           <div className="chart">
-            <div className="btn-group">
+            <div className="btn-group chart-title">
               Meme popularity on {this.state.source} over {this.state.dayView}
             </div>
             <div className="btn-group">

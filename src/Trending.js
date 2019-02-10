@@ -75,9 +75,10 @@ class Trending extends Component {
       }
     }
 
-    let title = this.props.isSearching ? <div className="title">Search Results for "{this.props.query}" 
-      <button onClick={this.onSearchClose}>X</button></div> : <div className="title">
-      Trending <span role="img" aria-label="up-and-to-the-right">📈</span></div>
+    let title = this.props.isSearching ? 
+      <div className="title">Search Results for "{this.props.query}" 
+      <button onClick={this.onSearchClose}>X</button></div> : 
+      <div className="title"> Trending <span role="img" aria-label="up-and-to-the-right">📈</span></div>
 
     return (
       <TrendingStyles>

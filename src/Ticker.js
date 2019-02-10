@@ -8,15 +8,15 @@ class Ticker extends Component {
   }
 
   componentDidMount() {
-    // this.timerID = setInterval(
-    //   () => this.tick(),
-    //   50
-    // );
+    this.timerID = setInterval(
+      () => this.tick(),
+      50
+    );
 
-    // this.timerID2 = setInterval(
-    //   () => this.tick2(),
-    //   500
-    // );
+    this.timerID2 = setInterval(
+      () => this.tick2(),
+      500
+    );
   }
 
   tick() {
@@ -33,12 +33,10 @@ class Ticker extends Component {
     });
   }
 
-  
-
   render() {
     return (
         <div className="ticker">
-          <div style={this.state} className="ticking">Buy Buy Buy!</div>
+          <div style={this.state} className="ticking">Buy! Buy! Buy!</div>
         </div>
     );
   }
