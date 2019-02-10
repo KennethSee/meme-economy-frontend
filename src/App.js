@@ -10,7 +10,6 @@ const AppWrapper = styled.div`
   width: 100vw;
 `;
 
-
 class App extends Component {
   render() {
     return (

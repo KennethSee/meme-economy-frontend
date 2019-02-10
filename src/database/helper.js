@@ -17,10 +17,8 @@ const getAllHits = async () => {
 }
 
 export const numAllHits = async () => {
-  console.log("wtf isnt this printing");
   const data = await getAllHits();
   const numHits = data["data"].length;
-  console.log("printing out the number of hits" + data["data"].length);
   return numHits;
 }
 

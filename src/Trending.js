@@ -47,11 +47,10 @@ class Trending extends Component {
         return false;
       }
     }
-
     return true;
   }
 
-  select(e, i) {
+  select(i) {
     this.setState({memes: this.state.memes, selected: i})
     this.props.onTileClick(this.state.memes[i].memeId || this.state.memes[i].id);
   }
@@ -63,23 +62,23 @@ class Trending extends Component {
         if (i === this.state.selected) {
           memes.push(
             <div key={this.state.memes[i].memeId || this.state.memes[i].id} className="tile selected">
-              <img onClick={(e) => this.select(e, i)} 
+              <img onClick={(e) => this.select(i)} 
                    src={this.state.memes[i].source || this.state.memes[i].url} alt="meme"></img>
             </div>)
         } else {
           memes.push(
             <div key={this.state.memes[i].memeId || this.state.memes[i].id} className="tile">
-              <img onClick={(e) => this.select(e, i)} 
+              <img onClick={(e) => this.select(i)} 
                    src={this.state.memes[i].source || this.state.memes[i].url} alt="meme"></img>
             </div>)
         }
       }
     }
 
-
-    let title = this.props.isSearching ? <div className="title">Search Results for "{this.props.query}" 
-      <button onClick={this.onSearchClose}>X</button></div> : <div className="title">
-      Trending <span role="img" aria-label="up-and-to-the-right">📈</span></div>
+    let title = this.props.isSearching ? 
+      <div className="title">Search Results for "{this.props.query}" 
+      <button onClick={this.onSearchClose}>X</button></div> : 
+      <div className="title"> Trending <span role="img" aria-label="up-and-to-the-right">📈</span></div>
 
     return (
       <TrendingStyles>
