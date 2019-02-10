@@ -483,9 +483,7 @@ class BarChart extends Component {
         })
       };
 
-      handleClick() {
-        <PopUp></PopUp>;
-      };
+      
 
   render(){
     let allButton = <button onClick={this.doHandleAll}>All</button>
@@ -536,7 +534,8 @@ class BarChart extends Component {
         <div className="btn-group">
           {oneDayButton}{fiveDayButton}{oneMonthButton}
         </div>
-        <button onClick={this.handleClick}>test</button>
+        {/* <button onClick={this.handleClick}>test</button> */}
+        <PopUp memeId={this.props.memeId}></PopUp>
       </div>
 
       } else {

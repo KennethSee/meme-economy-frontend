@@ -49,7 +49,7 @@ class Trending extends Component {
       }
     }
 
-    return (
+    return ( 
       <TrendingStyles>
         <div className="title">
           Trending <span role="img" aria-label="up-and-to-the-right">📈</span>

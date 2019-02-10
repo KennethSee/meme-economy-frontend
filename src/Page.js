@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import BarChart from './BarChart';
 import NavBar from './NavBar'
 import PopUp from './PopUp';
-import { getMemeUrl, getGraph, getGraphBySite, getTrending, getPlotPoints, searchMemes } from './database/helper';
+import { getMemeUrl, getGraph, getGraphBySite, getTrending, getPlotPoints } from './database/helper';
 import Ticker from './Ticker';
 import VisibleTrending from './Trending';
 
@@ -84,7 +84,6 @@ class Page extends Component {
         <PageWrapper>
           <VisibleTrending />
           <BarChart></BarChart>
-          <button onClick={this.handleClick}>Hello</button>
         </PageWrapper>
       </GlobalWrapper>
     );
@@ -95,8 +94,6 @@ class Page extends Component {
     console.log(url);
     const graph = await getGraph("48e8d382-24f6-4fb7-9d3f-b11c94cf9b34");
     console.log(graph);
-    const memes = await searchMemes("cute");
-    console.log(memes);
   }
 }
 

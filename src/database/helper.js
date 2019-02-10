@@ -16,6 +16,14 @@ const getAllHits = async () => {
   return data;
 }
 
+export const numAllHits = async () => {
+  console.log("wtf isnt this printing");
+  const data = await getAllHits();
+  const numHits = data["data"].length;
+  console.log("printing out the number of hits" + data["data"].length);
+  return numHits;
+}
+
 const getAllMemes = async () => {
   const url = 'https://memeeconomy-c73b8.firebaseio.com/.json';
   const data = await axios.get(url);
@@ -139,4 +147,4 @@ export const searchMemes = async (query) => {
 }
 
 
-export default { getMemeUrl, getGraph, getGraphBySite, getTrending, getPlotPoints, searchMemes }
+export default { getMemeUrl, getGraph, getGraphBySite, getTrending, getPlotPoints, searchMemes, numAllHits }
