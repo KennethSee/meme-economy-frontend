@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { getTopXMatchesFromTags } from './clarifai';
 
 class Meme {
   
@@ -126,4 +127,23 @@ export const getPlotPoints = (timestamps, interval) => {
   return timesToHits;
 }
 
-export default { getMemeUrl, getGraph, getGraphBySite, getTrending, getPlotPoints }
+// string -> sorted array of memes
+export const searchMemes = async (query) => {
+  const tags = query.split(",").map((str) => str.trim());
+  const memesData = await getAllMemes();
+  const memes = memesData["data"];
+  const searchResults = getTopXMatchesFromTags(tags, memes, 10).filter((result) => result.matchId != null);
+  console.log("SEARCH RESULTS");
+  console.log(searchResults);
+
+  const memeHash = memes.reduce((accumulator, meme) => {
+    accumulator[meme["id"]] = meme;
+    return accumulator;
+  }, {});
+  console.log(memeHash);
+  const output = searchResults.map((result) => memeHash[result["matchId"]]);
+  return output;
+}
+
+
+export default { getMemeUrl, getGraph, getGraphBySite, getTrending, getPlotPoints, searchMemes }
