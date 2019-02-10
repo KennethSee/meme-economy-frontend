@@ -33,11 +33,6 @@ class NavBar extends Component {
       };
       reader.readAsDataURL(ourFile);
     }
-    // getTagsFromImageFile(something)
-    //   .then(result => console.log(result));
-    // this.setState({
-    //   file: file
-    // });
   }
 
   search() {
