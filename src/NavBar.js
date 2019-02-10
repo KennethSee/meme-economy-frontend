@@ -11,6 +11,7 @@ class NavBar extends Component {
   }
 
   onDrop(file) {
+    console.log(file);
     this.setState({
       file: file
     });

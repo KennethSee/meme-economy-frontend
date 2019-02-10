@@ -9,7 +9,7 @@ class BarChart extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {source: "all", dayView: "1D"};
+    this.state = {source: "all platforms", dayView: "1 day"};
 
     this.doHandleAll = this.doHandleAll.bind(this);
     this.doHandleReddit = this.doHandleReddit.bind(this);
@@ -33,28 +33,28 @@ class BarChart extends Component {
 
   componentDidUpdate() {
     d3.select("svg").remove();
-    console.log("mount");
-    if (this.state.source == "all") {
+
+    if (this.state.source == "all platforms") {
       getGraph(this.props.memeId).then(result => {
         //console.log(result)
         this.drawChart(getPlotPoints(result, 'hour'))
       })
       .catch (err => console.log(err));
-    } else if (this.state.source == "reddit") {
+    } else if (this.state.source == "Reddit") {
       getGraphBySite(this.props.memeId,"reddit").then(result => {
-        console.log(result)
+        // console.log(result)
         this.drawChart(getPlotPoints(result, 'hour'))
       })
       .catch (err => console.log(err));
-    } else if (this.state.source == "facebook") {
+    } else if (this.state.source == "Facebook") {
       getGraphBySite(this.props.memeId,"FB").then(result => {
-        console.log(result)
+        // console.log(result)
         this.drawChart(getPlotPoints(result, 'hour'))
       })
       .catch (err => console.log(err));
-    } else if (this.state.source == "instagram") {
+    } else if (this.state.source == "Instagram") {
       getGraphBySite(this.props.memeId,"instagram").then(result => {
-        console.log(result)
+        // console.log(result)
         this.drawChart(getPlotPoints(result, 'hour'))
       })
       .catch (err => console.log(err));
@@ -62,7 +62,7 @@ class BarChart extends Component {
   }
   
     drawChart(plotPoints) {
-      if (this.state.dayView == "1D") {
+      if (this.state.dayView == "1 day") {
         let d = new Date();
         let today = new Date(d.getFullYear(), d.getMonth(), d.getDate());
         let relevantPlotPoints = plotPoints.filter((points) => {
@@ -85,6 +85,7 @@ class BarChart extends Component {
           // .domain([0, 15])
           // .range([0, width]);
           let dataset = relevantPlotPoints.sort(this.compare)
+
           // The number of datapoints
           var n = dataset.length;
           // console.log(dataset);
@@ -151,10 +152,18 @@ class BarChart extends Component {
           .style("font", "14px Roboto")
           .text("Number of hits")
 
+          var lineClass = "line"
+          var dotClass = "dot"
+
+            if (dataset[0].y > dataset[dataset.length - 1].y) {
+              lineClass = "down-line";
+              dotClass = "down-dot";
+            }
+
           // 9. Append the path, bind the data, and call the line generator 
           var path = svg.append("path")
           .datum(dataset) // 10. Binds data to the line 
-          .attr("class", "line") // Assign a class for styling 
+          .attr("class", lineClass) // Assign a class for styling 
           .attr("d", line); // 11. Calls the line generator 
         
           var totalLength = path.node().getTotalLength();
@@ -171,11 +180,11 @@ class BarChart extends Component {
           svg.selectAll(".dot")
           .data(dataset)
           .enter().append("circle") // Uses the enter().append() method
-          .attr("class", "dot") // Assign a class for styling
+          .attr("class", dotClass) // Assign a class for styling
           .attr("cx", function(d) { return xScale(d.x) })
           .attr("cy", function(d) { return yScale(d.y) })
           .attr("r", 5);
-      } else if (this.state.dayView == "5D") {
+      } else if (this.state.dayView == "5 days") {
         let d = new Date();
         let today = new Date(d.getFullYear(), d.getMonth(), d.getDate());
         let relevantPlotPoints = plotPoints.filter((points) => {
@@ -264,10 +273,18 @@ class BarChart extends Component {
           .style("font", "14px Roboto")
           .text("Number of hits")
 
+          var lineClass = "line"
+          var dotClass = "dot"
+
+            if (dataset[0].y > dataset[dataset.length - 1].y) {
+              lineClass = "down-line";
+              dotClass = "down-dot";
+            }
+
           // 9. Append the path, bind the data, and call the line generator 
           var path = svg.append("path")
           .datum(dataset) // 10. Binds data to the line 
-          .attr("class", "line") // Assign a class for styling 
+          .attr("class", lineClass) // Assign a class for styling 
           .attr("d", line); // 11. Calls the line generator 
         
           var totalLength = path.node().getTotalLength();
@@ -284,11 +301,11 @@ class BarChart extends Component {
           svg.selectAll(".dot")
           .data(dataset)
           .enter().append("circle") // Uses the enter().append() method
-          .attr("class", "dot") // Assign a class for styling
+          .attr("class", dotClass) // Assign a class for styling
           .attr("cx", function(d) { return xScale(d.x) })
           .attr("cy", function(d) { return yScale(d.y) })
           .attr("r", 5);
-        } else if (this.state.dayView == "1M") {
+        } else if (this.state.dayView == "1 month") {
           let d = new Date();
           let today = new Date(d.getFullYear(), d.getMonth(), d.getDate());
           let relevantPlotPoints = plotPoints.filter((points) => {
@@ -377,10 +394,18 @@ class BarChart extends Component {
             .style("font", "14px Roboto")
             .text("Number of hits")
 
+            var lineClass = "line"
+            var dotClass = "dot"
+
+              if (dataset[0].y > dataset[dataset.length - 1].y) {
+                lineClass = "down-line";
+                dotClass = "down-dot";
+              }
+
             // 9. Append the path, bind the data, and call the line generator 
             var path = svg.append("path")
             .datum(dataset) // 10. Binds data to the line 
-            .attr("class", "line") // Assign a class for styling 
+            .attr("class", lineClass) // Assign a class for styling 
             .attr("d", line); // 11. Calls the line generator 
           
             var totalLength = path.node().getTotalLength();
@@ -397,7 +422,7 @@ class BarChart extends Component {
             svg.selectAll(".dot")
             .data(dataset)
             .enter().append("circle") // Uses the enter().append() method
-            .attr("class", "dot") // Assign a class for styling
+            .attr("class", dotClass) // Assign a class for styling
             .attr("cx", function(d) { return xScale(d.x) })
             .attr("cy", function(d) { return yScale(d.y) })
             .attr("r", 5);
@@ -408,50 +433,47 @@ class BarChart extends Component {
   
       doHandleAll() {
         this.setState({
-          source: "all"
+          source: "all platforms"
         })
       };
 
       doHandleReddit() {
         this.setState({
-          source: "reddit"
+          source: "Reddit"
         })
       };
 
       doHandleFacebook() {
         this.setState({
-          source: "facebook"
+          source: "Facebook"
         })
       };
 
       doHandleInstagram() {
         this.setState({
-          source: "instagram"
+          source: "Instagram"
         })
       };
 
       doHandle1D() {
         this.setState({
-          dayView: "1D"
+          dayView: "1 day"
         })
       };
 
       doHandle5D() {
         this.setState({
-          dayView: "5D"
+          dayView: "5 days"
         })
       };
 
       doHandle1M() {
         this.setState({
-          dayView: "1M"
+          dayView: "1 month"
         })
       };
 
   render(){
-    console.log("rendered");
-    console.log(this.props.memeId);  
-
     let allButton = <button onClick={this.doHandleAll}>All</button>
     let redditButton = <button onClick={this.doHandleReddit}>Reddit</button>
     let facebookButton = <button onClick={this.doHandleFacebook}>Facebook</button>
@@ -462,43 +484,50 @@ class BarChart extends Component {
     let oneMonthButton = <button onClick={this.doHandle1M}>1M</button>
 
     switch (this.state.source) {
-      case "all":
+      case "all platforms":
         allButton = <button className="selected" onClick={this.doHandleAll}>All</button>
         break
-      case "reddit":
+      case "Reddit":
         redditButton = <button className="selected" onClick={this.doHandleReddit}>Reddit</button>
         break
-      case "facebook":
+      case "Facebook":
         facebookButton = <button className="selected" onClick={this.doHandleFacebook}>Facebook</button>
         break
-      case "instagram":
+      case "Instagram":
         instagramButton = <button className="selected" onClick={this.doHandleInstagram}>instagram</button>
         break
     };
 
     switch (this.state.dayView) {
-      case "1D":  
+      case "1 day":  
         oneDayButton = <button className="selected" onClick={this.doHandle1D}>1D</button>
         break
-      case "5D":
+      case "5 days":
         fiveDayButton = <button className="selected" onClick={this.doHandle5D}>5D</button>
         break
-      case "1M":
+      case "1 month":
         oneMonthButton = <button className="selected" onClick={this.doHandle1M}>1M</button>
         break
     };
     
       if (this.props.memeId) {
+        console.log(this.props.memeId)
         return <div className="chart">
         <div>
-          Meme popularity  
+          Meme popularity on {this.state.source} over {this.state.dayView}
         </div>
-        {allButton}{redditButton}{facebookButton}{instagramButton}
-        <div>{oneDayButton}{fiveDayButton}{oneMonthButton}</div>
+        <div className="btn-group">
+          {allButton}{redditButton}{facebookButton}{instagramButton}
+        </div>
+        <div className="btn-group">
+          {oneDayButton}{fiveDayButton}{oneMonthButton}
+        </div>
       </div>
 
       } else {
-        return <div></div>
+        return <div>
+          Welcome to the Meme Economy! The best place on the web to get up to date stats on the dankest memes.
+        </div>
       }
     }
 }

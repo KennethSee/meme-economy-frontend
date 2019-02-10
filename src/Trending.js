@@ -13,10 +13,7 @@ class Trending extends Component {
     this.state = {
       memes: [],
       selected: ''
-    
     }
-
-    // this.select = this.select.bind(this);
   }
 
 
@@ -63,10 +60,10 @@ class Trending extends Component {
 
     return (
       <TrendingStyles>
-        <div>
+        <div className="title">
           Trending 
         </div>
-        <div>
+        <div className="meme-container">
           {memes}
           {/* <Gallery images={IMAGES}/> */}
         </div>
