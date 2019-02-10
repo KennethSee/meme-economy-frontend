@@ -39,9 +39,8 @@ class PopUp extends Component {
 
     render() {
         return (
-            <section>
-                <h1></h1>
-                <input type="button" value="Open" onClick={() => this.openModal()} />
+            <div>
+                <input type="button" value="Give me all your data" onClick={() => this.openModal()} />
                 <Modal visible={this.state.visible} width="400" height="300" effect="fadeInUp" onClickAway={() => this.closeModal()}>
                     <div>
                         <h1 className="popup_title">What is the source of your meme?</h1>
@@ -59,7 +58,7 @@ class PopUp extends Component {
                         </div>
                     </div>
                 </Modal>
-            </section>
+            </div>
         );
     }
 
