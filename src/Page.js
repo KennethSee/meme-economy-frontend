@@ -1,11 +1,12 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import React, { Component } from 'react';
 import BarChart from './BarChart';
-import NavBar from './NavBar'
+import VisibleNavBar from './NavBar'
 import PopUp from './PopUp';
 import { getMemeUrl, getGraph, getGraphBySite, getTrending, getPlotPoints, searchMemes } from './database/helper';
 import Ticker from './Ticker';
 import VisibleTrending from './Trending';
+import {connect} from 'react-redux';
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto');
@@ -75,16 +76,17 @@ const PageWrapper = styled.div`
 `;
 
 class Page extends Component {
+
   render() {
     return (
       <GlobalWrapper>
         <GlobalStyle />
-        <NavBar></NavBar>
-        <Ticker></Ticker>
+        <VisibleNavBar />
+        <Ticker />
         <PageWrapper>
-          <VisibleTrending />
+          <VisibleTrending isSearching={this.props.isSearching} query={this.props.query}/>
           <BarChart></BarChart>
-          <button onClick={this.handleClick}>Hello</button>
+          {/* <button onClick={this.handleClick}>Hello</button> */}
         </PageWrapper>
       </GlobalWrapper>
     );
@@ -100,4 +102,16 @@ class Page extends Component {
   }
 }
 
-export default Page;
+const mapStateToProps = state => {
+  return {
+    isSearching: state.isSearching,
+    query: state.query
+  }
+}
+
+const VisiblePage = connect(
+  mapStateToProps
+)(Page)
+
+
+export default VisiblePage;

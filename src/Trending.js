@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { getMemeUrl, getGraph, getGraphBySite, getTrending, getPlotPoints } from './database/helper';
+import { getMemeUrl, getGraph, getGraphBySite, getTrending, searchMemes } from './database/helper';
 import TrendingStyles from './styles/TrendingStyles';
-import { changeMeme } from './actions/memeActions';
+import { changeMeme, isSearching } from './actions/memeActions';
 import { connect } from 'react-redux';
-import { render } from 'react-dom';
-import Gallery from 'react-grid-gallery';
 
 class Trending extends Component {
 
@@ -24,41 +22,82 @@ class Trending extends Component {
     .catch (err => console.log(err));
   }
 
+  componentDidUpdate() {
+    console.log("updating")
+    if (this.props.isSearching) {
+      searchMemes(this.props.query).then(result => {
+        console.log(result)
+        if (!this.memeArrayEquals(result, this.state.memes)) {
+          this.setState({memes: result});
+        }
+      })
+    } else {
+      getTrending().then(result => {
+        if (!this.memeArrayEquals(result, this.state.memes)) {
+          this.setState({memes: result});
+        }
+      })
+      .catch (err => console.log(err));
+    }
+  }
+
+  memeArrayEquals = (array1, array2) => {
+    if (array1.length != array2.length) {
+      return false;
+    }
+
+    for (let i = 0; i < array1.length; i++) {
+      if (array1[i].memeId !== array2[i].memeId) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   select(e, i) {
     this.setState({memes: this.state.memes, selected: i})
-    this.props.onTileClick(this.state.memes[i].memeId);
+    this.props.onTileClick(this.state.memes[i].memeId || this.state.memes[i].id);
   }
 
   render() {
-    var memes = [];
+    let memes = [];
     if (this.state.memes && this.state.memes.length !== 0) {
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < Math.min(10, this.state.memes.length); i++) {
         if (i === this.state.selected) {
           memes.push(
-            <div key={this.state.memes[i].memeId} className="tile selected">
+            <div key={this.state.memes[i].memeId || this.state.memes[i].id} className="tile selected">
               <img onClick={(e) => this.select(e, i)} 
-                   src={this.state.memes[i].source} alt="meme"></img>
+                   src={this.state.memes[i].source || this.state.memes[i].url} alt="meme"></img>
             </div>)
         } else {
           memes.push(
-            <div key={this.state.memes[i].memeId} className="tile">
+            <div key={this.state.memes[i].memeId || this.state.memes[i].id} className="tile">
               <img onClick={(e) => this.select(e, i)} 
-                   src={this.state.memes[i].source} alt="meme"></img>
+                   src={this.state.memes[i].source || this.state.memes[i].url} alt="meme"></img>
             </div>)
         }
       }
     }
 
+    let title = this.props.isSearching ? <div className="title">Search Results for "{this.props.query}" 
+      <button onClick={this.onSearchClose}>X</button></div> : <div className="title">
+      Trending <span role="img" aria-label="up-and-to-the-right">📈</span></div>
+
     return (
       <TrendingStyles>
-        <div className="title">
-          Trending <span role="img" aria-label="up-and-to-the-right">📈</span>
-        </div>
+        {title}
         <div className="meme-container">
-          {memes}
+        {memes}
         </div>
       </TrendingStyles>
     );
+  }
+
+  onSearchClose = () => {
+    console.log("onSearchClose")
+    this.props.onExit();
+    this.props.onTileClick(null);
   }
 }
 
@@ -66,6 +105,9 @@ const mapDispatchToProps = dispatch => {
   return {
     onTileClick: id => {
       dispatch(changeMeme(id));
+    },
+    onExit: () => {
+      dispatch(isSearching(false))
     }
   }
 }
