@@ -35,14 +35,14 @@ class Trending extends Component {
       for (let i = 0; i < 10; i++) {
         if (i === this.state.selected) {
           memes.push(
-            <div className="tile selected">
-              <img key={i} onClick={(e) => this.select(e, i)} 
+            <div key={this.state.memes[i].memeId} className="tile selected">
+              <img onClick={(e) => this.select(e, i)} 
                    src={this.state.memes[i].source} alt="meme"></img>
             </div>)
         } else {
           memes.push(
-            <div className="tile">
-              <img key={i} onClick={(e) => this.select(e, i)} 
+            <div key={this.state.memes[i].memeId} className="tile">
+              <img onClick={(e) => this.select(e, i)} 
                    src={this.state.memes[i].source} alt="meme"></img>
             </div>)
         }
