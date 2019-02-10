@@ -32,27 +32,26 @@ class PopUp extends Component {
         const data = {
             "meme_id": UUID, "source": source, "timestamp": today
         };
-        const postedData = await axios.put(url, data);
-        console.log(postedData);
+        await axios.put(url, data);
         this.closeModal();
     };
 
     render() {
         return (
             <div>
-                <input type="button" value="Give me all your data" onClick={() => this.openModal()} />
+                <input type="button" value="Have you seen this meme before?" onClick={() => this.openModal()} />
                 <Modal visible={this.state.visible} width="400" height="300" effect="fadeInUp" onClickAway={() => this.closeModal()}>
-                    <div>
-                        <h1 className="popup_title">What is the source of your meme?</h1>
-                        <div>
+                    <h1 className="popup_title">What is the source of your meme?</h1>
+                    <div className="modal-table">
+                        <div className="modal-table-cell">
                             <img alt="reddit" src="https://www.redditstatic.com/new-icon.png" className="popup_image"></img>
                             <button onClick={() => this.hitDB("reddit")} className="popup_content">Reddit</button>
                         </div>
-                        <div>
+                        <div className="modal-table-cell">
                             <img alt="facebook" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Facebook_logo_%28square%29.png/600px-Facebook_logo_%28square%29.png" className="popup_image"></img>
                             <button onClick={() => this.hitDB("FB")} className="popup_content">Facebook</button>
                         </div>
-                        <div>
+                        <div className="modal-table-cell">
                             <img alt="instagram" src="https://instagram-brand.com/wp-content/themes/ig-branding/assets/images/ig-logo-email.png" className="popup_image"></img>
                             <button onClick={() => this.hitDB("instagram")} className="popup_content">Instagram</button>
                         </div>

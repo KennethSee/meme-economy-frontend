@@ -172,8 +172,6 @@ class BarChart extends Component {
         let relevantPlotPoints = plotPoints.filter((points) => {
           return today.getDate()-5 <= points.x.getDate() <= today.getDate();
         });
-        console.log(relevantPlotPoints);
-        //console.log(plotPoints);
 
           // 2. Use the margin convention practice 
           var margin = {top: 30, right: 30, bottom: 50, left: 50}
@@ -191,7 +189,6 @@ class BarChart extends Component {
           let dataset = relevantPlotPoints.sort(this.compare)
           // The number of datapoints
           var n = dataset.length;
-          // console.log(dataset);
 
           var xScale = d3.scaleTime()
           .domain([dataset[0].x, dataset[dataset.length - 1].x])
@@ -199,7 +196,6 @@ class BarChart extends Component {
           .range([0, width]);
 
           let max_y = Math.max.apply(Math,(dataset.map((point) => point.y)));
-          console.log(max_y);
 
           // 6. Y scale will use the input data 
           var yScale = d3.scaleLinear()
@@ -296,8 +292,6 @@ class BarChart extends Component {
           let relevantPlotPoints = plotPoints.filter((points) => {
             return today.getDate()-30 <= points.x.getDate() <= today.getDate();
           });
-          console.log(relevantPlotPoints);
-          console.log(plotPoints);
 
             // 2. Use the margin convention practice 
             var margin = {top: 30, right: 30, bottom: 50, left: 50}
@@ -315,7 +309,6 @@ class BarChart extends Component {
             let dataset = relevantPlotPoints.sort(this.compare)
             // The number of datapoints
             var n = dataset.length;
-            // console.log(dataset);
 
             var xScale = d3.scaleTime()
             .domain([dataset[0].x, dataset[dataset.length - 1].x])
@@ -323,7 +316,6 @@ class BarChart extends Component {
             .range([0, width]);
 
             let max_y = Math.max.apply(Math,(dataset.map((point) => point.y)));
-            console.log(max_y);
 
             // 6. Y scale will use the input data 
             var yScale = d3.scaleLinear()
@@ -416,123 +408,80 @@ class BarChart extends Component {
             .attr("r", 5);
         };
       };
-      
 
-  
-      doHandleAll() {
-        this.setState({
-          source: "all platforms"
-        })
-      };
+      handleDayView(dayView) {
+        this.setState({dayView: dayView});
+      }
 
-      doHandleReddit() {
-        this.setState({
-          source: "Reddit"
-        })
-      };
-
-      doHandleFacebook() {
-        this.setState({
-          source: "Facebook"
-        })
-      };
-
-      doHandleInstagram() {
-        this.setState({
-          source: "Instagram"
-        })
-      };
-
-      doHandle1D() {
-        this.setState({
-          dayView: "1 day"
-        })
-      };
-
-      doHandle5D() {
-        this.setState({
-          dayView: "5 days"
-        })
-      };
-
-      doHandle1M() {
-        this.setState({
-          dayView: "1 month"
-        })
-      };
-
-      
+      handleSource(source) {
+        this.setState({source: source});
+      }
 
   render(){
-    let allButton = <button onClick={this.doHandleAll}>All</button>
-    let redditButton = <button onClick={this.doHandleReddit}>Reddit</button>
-    let facebookButton = <button onClick={this.doHandleFacebook}>Facebook</button>
-    let instagramButton = <button onClick={this.doHandleInstagram}>Instagram</button>
+    let allButton = <button onClick={() => this.handleSource("all platforms")}>All</button>
+    let redditButton = <button onClick={() =>this.handleSource("Reddit")}>Reddit</button>
+    let facebookButton = <button onClick={() => this.handleSource("Facebook")}>Facebook</button>
+    let instagramButton = <button onClick={() => this.handleSource("Instagram")}>Instagram</button>
 
-    let oneDayButton = <button onClick={this.doHandle1D}>1D</button>
-    let fiveDayButton = <button onClick={this.doHandle5D}>5D</button>
-    let oneMonthButton = <button onClick={this.doHandle1M}>1M</button>
+    let oneDayButton = <button onClick={() => this.handleDayView("1 day")}>1D</button>
+    let fiveDayButton = <button onClick={() => this.handleDayView("5 days")}>5D</button>
+    let oneMonthButton = <button onClick={() => this.handleDayView("1 month")}>1M</button>
 
     switch (this.state.source) {
-      case "all platforms":
-        allButton = <button className="selected" onClick={this.doHandleAll}>All</button>
-        break
       case "Reddit":
         redditButton = <button className="selected" onClick={this.doHandleReddit}>Reddit</button>
-        break
+        break;
       case "Facebook":
         facebookButton = <button className="selected" onClick={this.doHandleFacebook}>Facebook</button>
-        break
+        break;
       case "Instagram":
-        instagramButton = <button className="selected" onClick={this.doHandleInstagram}>instagram</button>
-        break
-    };
+        instagramButton = <button className="selected" onClick={this.doHandleInstagram}>Instagram</button>
+        break;
+      default:
+        allButton = <button className="selected" onClick={this.doHandleAll}>All</button>
+        break;
+    }
 
     switch (this.state.dayView) {
-      case "1 day":  
-        oneDayButton = <button className="selected" onClick={this.doHandle1D}>1D</button>
-        break
       case "5 days":
         fiveDayButton = <button className="selected" onClick={this.doHandle5D}>5D</button>
-        break
+        break;
       case "1 month":
         oneMonthButton = <button className="selected" onClick={this.doHandle1M}>1M</button>
-        break
-    };
+        break;
+      default:
+        oneDayButton = <button className="selected" onClick={this.doHandle1D}>1D</button>
+        break;
+    }
     
       if (this.props.memeId) {
-        console.log(this.props.memeId)
-        return <div className="chart">
-        <div>
-          Meme popularity on {this.state.source} over {this.state.dayView}
+        return (
+          <div className="chart">
+            <div className="btn-group">
+              Meme popularity on {this.state.source} over {this.state.dayView}
+            </div>
+            <div className="btn-group">
+              {allButton}{redditButton}{facebookButton}{instagramButton}
+            </div>
+            <div className="btn-group">
+              {oneDayButton}{fiveDayButton}{oneMonthButton}
+            </div>
+          <PopUp memeId={this.props.memeId}></PopUp>
         </div>
-        <div className="btn-group">
-          {allButton}{redditButton}{facebookButton}{instagramButton}
-        </div>
-        <div className="btn-group">
-          {oneDayButton}{fiveDayButton}{oneMonthButton}
-        </div>
-        {/* <button onClick={this.handleClick}>test</button> */}
-        <PopUp memeId={this.props.memeId}></PopUp>
-      </div>
-
+        );
       } else {
         return <div>
           Welcome to the Meme Economy!
           <div className="subtitle">The best place on the web to get up to date stats on the dankest memes.</div>
         </div>
       }
-      
     }
 }
-
 
 const mapStateToProps = state => ({
   memeId: state.memeId,
   siteId: state.siteId
 })
-
-
 
 export default connect(
   mapStateToProps
