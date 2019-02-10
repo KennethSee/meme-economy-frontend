@@ -83,7 +83,7 @@ class Page extends Component {
         <VisibleNavBar />
         <Ticker />
         <PageWrapper>
-          <VisibleTrending isSearching={this.props.isSearching} query={this.props.query}/>
+          <VisibleTrending isSearching={this.props.isSearching} query={this.props.query} queryText={this.props.queryText}/>
           <BarChart></BarChart>
         </PageWrapper>
       </GlobalWrapper>
@@ -94,7 +94,8 @@ class Page extends Component {
 const mapStateToProps = state => {
   return {
     isSearching: state.isSearching,
-    query: state.query
+    query: state.query,
+    queryText: state.queryText
   }
 }
 
