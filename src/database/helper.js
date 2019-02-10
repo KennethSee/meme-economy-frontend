@@ -55,7 +55,6 @@ export const getTrending = async () => {
       }
 
       const hitTime = new Date(hit["timestamp"]);
-      // console.log(hitTime);
       if (hitTime < yesterday) {
         return acc;
       }
@@ -113,12 +112,9 @@ export const getPlotPoints = (timestamps, interval) => {
     } else {
       smolTimestamp = new Date(timestamp.getFullYear(), timestamp.getMonth());
     }
-    // console.log(smolTimestamp);
 
     if (acc.length == 0 || acc[0].x.getTime() !== smolTimestamp.getTime()) {
       acc.unshift({ x: smolTimestamp, y: 1 });
-      //console.log(acc[0].x.getTime());
-      //console.log(smolTimestamp.getTime());
     } else {
       acc[0].y += 1;
     }
@@ -133,14 +129,11 @@ export const searchMemes = async (query) => {
   const memesData = await getAllMemes();
   const memes = memesData["data"];
   const searchResults = getTopXMatchesFromTags(tags, memes, 10).filter((result) => result.matchId != null);
-  console.log("SEARCH RESULTS");
-  console.log(searchResults);
 
   const memeHash = memes.reduce((accumulator, meme) => {
     accumulator[meme["id"]] = meme;
     return accumulator;
   }, {});
-  console.log(memeHash);
   const output = searchResults.map((result) => memeHash[result["matchId"]]);
   return output;
 }
