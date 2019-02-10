@@ -1,8 +1,9 @@
-import { CHANGE_MEME, CHANGE_SITE } from '../actions';
+import { CHANGE_MEME, IS_SEARCHING, CHANGE_QUERY } from '../actions';
 
 const initialState = {
   memeId: null,
-  site: null
+  isSearching: false,
+  query: ''
 }
 
 function memeReducer(state = initialState, action) {
@@ -12,10 +13,15 @@ function memeReducer(state = initialState, action) {
         ...state,
         memeId: action.id
       }
-    case CHANGE_SITE:
+    case IS_SEARCHING:
       return {
         ...state,
-        site: action.site
+        isSearching: action.searchingHuh
+      }
+    case CHANGE_QUERY:
+      return {
+        ...state,
+        query: action.query
       }
     default:
       return state;
