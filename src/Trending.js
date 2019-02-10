@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { getMemeUrl, getGraph, getGraphBySite, getTrending, searchMemes } from './database/helper';
+import { getTrending, searchMemes } from './database/helper';
 import TrendingStyles from './styles/TrendingStyles';
 import { changeMeme, isSearching } from './actions/memeActions';
 import { connect } from 'react-redux';
 
 class Trending extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +12,6 @@ class Trending extends Component {
       selected: ''
     }
   }
-
 
   componentDidMount() {
     getTrending().then(result => {
@@ -23,10 +21,8 @@ class Trending extends Component {
   }
 
   componentDidUpdate() {
-    console.log("updating")
     if (this.props.isSearching) {
       searchMemes(this.props.query).then(result => {
-        console.log(result)
         if (!this.memeArrayEquals(result, this.state.memes)) {
           this.setState({memes: result});
         }
@@ -42,7 +38,7 @@ class Trending extends Component {
   }
 
   memeArrayEquals = (array1, array2) => {
-    if (array1.length != array2.length) {
+    if (array1.length !== array2.length) {
       return false;
     }
 
@@ -96,7 +92,6 @@ class Trending extends Component {
   }
 
   onSearchClose = () => {
-    console.log("onSearchClose")
     this.props.onExit();
     this.props.onTileClick(null);
   }

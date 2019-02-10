@@ -33,7 +33,7 @@ const getAllMemes = async () => {
 // UUID -> Url
 export const getMemeUrl = async (memeId) => {
   const data = await getAllMemes();
-  const idList = data["data"].filter(meme => meme["id"] == memeId);
+  const idList = data["data"].filter(meme => meme["id"] === memeId);
   return idList[0]["url"];
 }
 
@@ -121,7 +121,7 @@ export const getPlotPoints = (timestamps, interval) => {
       smolTimestamp = new Date(timestamp.getFullYear(), timestamp.getMonth());
     }
 
-    if (acc.length == 0 || acc[0].x.getTime() !== smolTimestamp.getTime()) {
+    if (acc.length === 0 || acc[0].x.getTime() !== smolTimestamp.getTime()) {
       acc.unshift({ x: smolTimestamp, y: 1 });
     } else {
       acc[0].y += 1;

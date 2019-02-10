@@ -141,3 +141,8 @@ code {
 .subtitle {
   font-size: 20px;
 }
+
+.fileUploader .fileContainer {
+  padding: 0;
+  margin-top: 10px;
+}

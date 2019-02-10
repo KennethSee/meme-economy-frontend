@@ -45,16 +45,16 @@ class PopUp extends Component {
                     <div>
                         <h1 className="popup_title">What is the source of your meme?</h1>
                         <div>
-                            <img src="https://www.redditstatic.com/new-icon.png" className="popup_image"></img>
-                            <a href="javascript:void(0);" onClick={() => this.hitDB("reddit")} className="popup_content">Reddit</a>
+                            <img alt="reddit" src="https://www.redditstatic.com/new-icon.png" className="popup_image"></img>
+                            <button onClick={() => this.hitDB("reddit")} className="popup_content">Reddit</button>
                         </div>
                         <div>
-                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Facebook_logo_%28square%29.png/600px-Facebook_logo_%28square%29.png" className="popup_image"></img>
-                            <a href="javascript:void(0);" onClick={() => this.hitDB("FB")} className="popup_content">Facebook</a>
+                            <img alt="facebook" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Facebook_logo_%28square%29.png/600px-Facebook_logo_%28square%29.png" className="popup_image"></img>
+                            <button onClick={() => this.hitDB("FB")} className="popup_content">Facebook</button>
                         </div>
                         <div>
-                            <img src="https://instagram-brand.com/wp-content/themes/ig-branding/assets/images/ig-logo-email.png" className="popup_image"></img>
-                            <a href="javascript:void(0);" onClick={() => this.hitDB("instagram")} className="popup_content">Instagram</a>
+                            <img alt="instagram" src="https://instagram-brand.com/wp-content/themes/ig-branding/assets/images/ig-logo-email.png" className="popup_image"></img>
+                            <button onClick={() => this.hitDB("instagram")} className="popup_content">Instagram</button>
                         </div>
                     </div>
                 </Modal>

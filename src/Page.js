@@ -2,8 +2,7 @@ import styled, { createGlobalStyle } from 'styled-components';
 import React, { Component } from 'react';
 import BarChart from './BarChart';
 import VisibleNavBar from './NavBar'
-import PopUp from './PopUp';
-import { getMemeUrl, getGraph, getGraphBySite, getTrending, getPlotPoints } from './database/helper';
+import { getMemeUrl, getGraph } from './database/helper';
 import Ticker from './Ticker';
 import VisibleTrending from './Trending';
 import {connect} from 'react-redux';
@@ -72,7 +71,7 @@ const GlobalWrapper = styled.div`
 `;
 
 const PageWrapper = styled.div`
-  height: calc(100% - 189px);
+  height: calc(100% - 119px);
 `;
 
 class Page extends Component {
