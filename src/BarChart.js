@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import * as d3 from "d3";
-import helper, { getGraph, getGraphBySite, getPlotPoints } from './database/helper';
+import { getGraph, getGraphBySite, getPlotPoints } from './database/helper';
 import { connect } from 'react-redux';
-import { networkInterfaces } from 'os';
+import PopUp from './PopUp';
 
 
 class BarChart extends Component {
@@ -33,28 +33,23 @@ class BarChart extends Component {
 
   componentDidUpdate() {
     d3.select("svg").remove();
-
-    if (this.state.source == "all platforms") {
+    if (this.state.source === "all platforms") {
       getGraph(this.props.memeId).then(result => {
-        //console.log(result)
         this.drawChart(getPlotPoints(result, 'hour'))
       })
       .catch (err => console.log(err));
-    } else if (this.state.source == "Reddit") {
+    } else if (this.state.source === "Reddit") {
       getGraphBySite(this.props.memeId,"reddit").then(result => {
-        // console.log(result)
         this.drawChart(getPlotPoints(result, 'hour'))
       })
       .catch (err => console.log(err));
-    } else if (this.state.source == "Facebook") {
+    } else if (this.state.source === "Facebook") {
       getGraphBySite(this.props.memeId,"FB").then(result => {
-        // console.log(result)
         this.drawChart(getPlotPoints(result, 'hour'))
       })
       .catch (err => console.log(err));
-    } else if (this.state.source == "Instagram") {
+    } else if (this.state.source === "Instagram") {
       getGraphBySite(this.props.memeId,"instagram").then(result => {
-        // console.log(result)
         this.drawChart(getPlotPoints(result, 'hour'))
       })
       .catch (err => console.log(err));
@@ -62,132 +57,116 @@ class BarChart extends Component {
   }
   
     drawChart(plotPoints) {
-      if (this.state.dayView == "1 day") {
+      if (this.state.dayView === "1 day") {
         let d = new Date();
         let today = new Date(d.getFullYear(), d.getMonth(), d.getDate());
         let relevantPlotPoints = plotPoints.filter((points) => {
-          return points.x.getDate() == today.getDate();
+          return points.x.getDate() === today.getDate();
         });
-        console.log(relevantPlotPoints);
-        console.log(plotPoints);
 
-          // 2. Use the margin convention practice 
-          var margin = {top: 30, right: 30, bottom: 50, left: 50}
-          , width = (window.innerWidth * .60) - margin.left - margin.right // Use the window's width 
-          , height = (window.innerHeight * .55) - margin.top - margin.bottom; // Use the window's height
+        // 2. Use the margin convention practice 
+        var margin = {top: 30, right: 30, bottom: 50, left: 50}, 
+            width = (window.innerWidth * .60) - margin.left - margin.right, // Use the window's width 
+            height = (window.innerHeight * .55) - margin.top - margin.bottom; // Use the window's height
 
-          // 5. X scale will use the index of our data
-          // var xScale = d3.scaleLinear()
-          // .domain([0, 15]) // input
-          // .range([0, width]); // output
+        let dataset = relevantPlotPoints.sort(this.compare)
 
-          // var xScale = d3.scaleTime()
-          // .domain([0, 15])
-          // .range([0, width]);
-          let dataset = relevantPlotPoints.sort(this.compare)
+        // The number of datapoints
+        var n = dataset.length;
+  
 
-          // The number of datapoints
-          var n = dataset.length;
-          // console.log(dataset);
-
-          var xScale = d3.scaleTime()
+        var xScale = d3.scaleTime()
           .domain([dataset[0].x, dataset[dataset.length - 1].x])
           .nice(d3.timeDay)
           .range([0, width]);
 
-          let max_y = Math.max.apply(Math,(dataset.map((point) => point.y)));
-          console.log(max_y);
+        let max_y = Math.max.apply(Math,(dataset.map((point) => point.y)));
 
-          // 6. Y scale will use the input data 
-          var yScale = d3.scaleLinear()
+        // 6. Y scale will use the input data 
+        var yScale = d3.scaleLinear()
           .domain([0, max_y + 1])
           .range([height, 0]); // output 
 
-          // 7. d3's line generator
-          var line = d3.line()
+        // 7. d3's line generator
+        var line = d3.line()
           .x(function(d) { return xScale(d.x); }) // set the x values for the line generator
-          .y(function(d) { return yScale(d.y); }) // set the y values for the line generator 
-          // .curve(d3.curveMonotoneX) // apply smoothing to the line
+          .y(function(d) { return yScale(d.y); }) // set the y values for the line generator  
 
-          // 8. An array of objects of length N. Each object has key -> value pair, the key being "y" and the value is a random number
-          //var dataset = d3.range(n).map(function(d) { return {"y": d3.randomUniform(1)() } })
-          
-
-          // 1. Add the SVG to the page and employ #2
-          var svg = d3.select(".chart").append("svg")
+        // 1. Add the SVG to the page and employ #2
+        var svg = d3.select(".chart").append("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom)
           .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-          // svg.append("g")
-          // .attr("transform", "translate(5,0)")
-          // .call(d3.svg.axis().scale(xScale).ticks(24).tickFormat(d3.timeFormat("%H:%M")));
+        // svg.append("g")
+        // .attr("transform", "translate(5,0)")
+        // .call(d3.svg.axis().scale(xScale).ticks(24).tickFormat(d3.timeFormat("%H:%M")));
 
-          // 3. Call the x axis in a group tag
-          svg.append("g")
-          .attr("class", "x axis")
-          .attr("transform", "translate(0," + height + ")")
-          .call(d3.axisBottom(xScale).ticks(12).tickFormat(d3.timeFormat("%H:%M"))); // Create an axis component with d3.axisBottom
+        // 3. Call the x axis in a group tag
+        svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(d3.axisBottom(xScale).ticks(12).tickFormat(d3.timeFormat("%H:%M"))); // Create an axis component with d3.axisBottom
 
-          // 4. Call the y axis in a group tag
-          svg.append("g")
-          .attr("class", "y axis")
-          .call(d3.axisLeft(yScale).ticks(Math.sqrt(max_y)).tickFormat(d3.format(".0f"))); // Create an axis component with d3.axisLeft
+        // 4. Call the y axis in a group tag
+        svg.append("g")
+        .attr("class", "y axis")
+        .call(d3.axisLeft(yScale).ticks(Math.sqrt(max_y)).tickFormat(d3.format(".0f"))); // Create an axis component with d3.axisLeft
 
-          // Add X axis label
-          svg.append("text")
-          .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
-          .style("text-anchor", "middle")
-          .text("Time")
-          .style("font", "14px Roboto");
+        // Add X axis label
+        svg.append("text")
+        .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+        .style("text-anchor", "middle")
+        .text("Time")
+        .style("font", "14px Roboto");
 
-          // Add Y axis label
-          svg.append("text")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 0 - margin.left)
-          .attr("x",0 - (height / 2))
-          .attr("dy", "1em")
-          .style("text-anchor", "middle")
-          .style("font", "14px Roboto")
-          .text("Number of hits")
+        // Add Y axis label
+        svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin.left)
+        .attr("x",0 - (height / 2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .style("font", "14px Roboto")
+        .text("Number of hits")
 
-          var lineClass = "line"
-          var dotClass = "dot"
+        var lineClass = "line"
+        var dotClass = "dot"
 
-          if (dataset[0].y > dataset[dataset.length - 1].y) {
-            lineClass = "down-line";
-            dotClass = "down-dot";
-          } else if (dataset[0].y == dataset[dataset.length - 1].y){
-            lineClass = "even-line";
-            dotClass = "even-dot";
-          }
+        if (dataset[0].y > dataset[dataset.length - 1].y) {
+          lineClass = "down-line";
+          dotClass = "down-dot";
+        } else if (dataset[0].y == dataset[dataset.length - 1].y){
+          lineClass = "even-line";
+          dotClass = "even-dot";
+        }
 
-          // 9. Append the path, bind the data, and call the line generator 
-          var path = svg.append("path")
-          .datum(dataset) // 10. Binds data to the line 
-          .attr("class", lineClass) // Assign a class for styling 
-          .attr("d", line); // 11. Calls the line generator 
-        
-          var totalLength = path.node().getTotalLength();
+        // 9. Append the path, bind the data, and call the line generator 
+        var path = svg.append("path")
+        .datum(dataset) // 10. Binds data to the line 
+        .attr("class", lineClass) // Assign a class for styling 
+        .attr("d", line); // 11. Calls the line generator 
+      
+        var totalLength = path.node().getTotalLength();
 
-          path
-          .attr("stroke-dasharray", totalLength + " " + totalLength)
-          .attr("stroke-dashoffset", totalLength)
-          .transition() // Call Transition Method
-          .duration(4000) // Set Duration timing (ms)
-          .ease(d3.easeCubicOut) // Set Easing option
-          .attr("stroke-dashoffset", 0);
+        path
+        .attr("stroke-dasharray", totalLength + " " + totalLength)
+        .attr("stroke-dashoffset", totalLength)
+        .transition() // Call Transition Method
+        .duration(4000) // Set Duration timing (ms)
+        .ease(d3.easeCubicOut) // Set Easing option
+        .attr("stroke-dashoffset", 0);
 
-          // 12. Appends a circle for each datapoint 
-          svg.selectAll(".dot")
-          .data(dataset)
-          .enter().append("circle") // Uses the enter().append() method
-          .attr("class", dotClass) // Assign a class for styling
-          .attr("cx", function(d) { return xScale(d.x) })
-          .attr("cy", function(d) { return yScale(d.y) })
-          .attr("r", 5);
-      } else if (this.state.dayView == "5 days") {
+        // 12. Appends a circle for each datapoint 
+        svg.selectAll(".dot")
+        .data(dataset)
+        .enter().append("circle") // Uses the enter().append() method
+        .attr("class", dotClass) // Assign a class for styling
+        .attr("cx", function(d) { return xScale(d.x) })
+        .attr("cy", function(d) { return yScale(d.y) })
+        .attr("r", 5);
+      } else if (this.state.dayView === "5 days") {
         let d = new Date();
         let today = new Date(d.getFullYear(), d.getMonth(), d.getDate());
         let relevantPlotPoints = plotPoints.filter((points) => {
@@ -482,6 +461,8 @@ class BarChart extends Component {
         })
       };
 
+      
+
   render(){
     let allButton = <button onClick={this.doHandleAll}>All</button>
     let redditButton = <button onClick={this.doHandleReddit}>Reddit</button>
@@ -531,6 +512,8 @@ class BarChart extends Component {
         <div className="btn-group">
           {oneDayButton}{fiveDayButton}{oneMonthButton}
         </div>
+        {/* <button onClick={this.handleClick}>test</button> */}
+        <PopUp memeId={this.props.memeId}></PopUp>
       </div>
 
       } else {
@@ -539,6 +522,7 @@ class BarChart extends Component {
           <div className="subtitle">The best place on the web to get up to date stats on the dankest memes.</div>
         </div>
       }
+      
     }
 }
 

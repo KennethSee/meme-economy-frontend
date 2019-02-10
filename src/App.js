@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import styled from 'styled-components';
-import Page from './Page';
+import VisiblePage from './Page';
 
 const AppWrapper = styled.div`
   text-align: center;
@@ -16,7 +16,7 @@ class App extends Component {
     return (
       <div className="App">
         <AppWrapper>
-          <Page></Page>
+          <VisiblePage />
         </AppWrapper>
       </div>
     );

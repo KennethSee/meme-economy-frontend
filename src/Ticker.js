@@ -8,15 +8,15 @@ class Ticker extends Component {
   }
 
   componentDidMount() {
-    this.timerID = setInterval(
-      () => this.tick(),
-      50
-    );
+    // this.timerID = setInterval(
+    //   () => this.tick(),
+    //   50
+    // );
 
-    this.timerID2 = setInterval(
-      () => this.tick2(),
-      500
-    );
+    // this.timerID2 = setInterval(
+    //   () => this.tick2(),
+    //   500
+    // );
   }
 
   tick() {

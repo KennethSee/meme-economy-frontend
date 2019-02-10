@@ -16,6 +16,14 @@ const getAllHits = async () => {
   return data;
 }
 
+export const numAllHits = async () => {
+  console.log("wtf isnt this printing");
+  const data = await getAllHits();
+  const numHits = data["data"].length;
+  console.log("printing out the number of hits" + data["data"].length);
+  return numHits;
+}
+
 const getAllMemes = async () => {
   const url = 'https://memeeconomy-c73b8.firebaseio.com/.json';
   const data = await axios.get(url);
@@ -25,7 +33,7 @@ const getAllMemes = async () => {
 // UUID -> Url
 export const getMemeUrl = async (memeId) => {
   const data = await getAllMemes();
-  const idList = data["data"].filter(meme => meme["id"] == memeId);
+  const idList = data["data"].filter(meme => meme["id"] === memeId);
   return idList[0]["url"];
 }
 
@@ -113,7 +121,7 @@ export const getPlotPoints = (timestamps, interval) => {
       smolTimestamp = new Date(timestamp.getFullYear(), timestamp.getMonth());
     }
 
-    if (acc.length == 0 || acc[0].x.getTime() !== smolTimestamp.getTime()) {
+    if (acc.length === 0 || acc[0].x.getTime() !== smolTimestamp.getTime()) {
       acc.unshift({ x: smolTimestamp, y: 1 });
     } else {
       acc[0].y += 1;
@@ -139,4 +147,4 @@ export const searchMemes = async (query) => {
 }
 
 
-export default { getMemeUrl, getGraph, getGraphBySite, getTrending, getPlotPoints, searchMemes }
+export default { getMemeUrl, getGraph, getGraphBySite, getTrending, getPlotPoints, searchMemes, numAllHits }

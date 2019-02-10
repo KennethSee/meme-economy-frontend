@@ -32,12 +32,14 @@ code {
   background-color: black;
   color: white;
   font-size: 20px;
+  
 }
 
 .ticker .ticking {
   position: absolute;
   left: 0;
   width: 120px;
+  overflow: hidden;
 }
 
 .line {
@@ -138,4 +140,9 @@ code {
 
 .subtitle {
   font-size: 20px;
+}
+
+.fileUploader .fileContainer {
+  padding: 0;
+  margin-top: 10px;
 }

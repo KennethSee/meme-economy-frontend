@@ -1,11 +1,11 @@
 import styled, { createGlobalStyle } from 'styled-components';
 import React, { Component } from 'react';
 import BarChart from './BarChart';
-import NavBar from './NavBar'
-import PopUp from './PopUp';
-import { getMemeUrl, getGraph, getGraphBySite, getTrending, getPlotPoints, searchMemes } from './database/helper';
+import VisibleNavBar from './NavBar'
+import { getMemeUrl, getGraph } from './database/helper';
 import Ticker from './Ticker';
 import VisibleTrending from './Trending';
+import {connect} from 'react-redux';
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css?family=Roboto');
@@ -71,20 +71,20 @@ const GlobalWrapper = styled.div`
 `;
 
 const PageWrapper = styled.div`
-  height: calc(100% - 189px);
+  height: calc(100% - 119px);
 `;
 
 class Page extends Component {
+
   render() {
     return (
       <GlobalWrapper>
         <GlobalStyle />
-        <NavBar></NavBar>
-        <Ticker></Ticker>
+        <VisibleNavBar />
+        <Ticker />
         <PageWrapper>
-          <VisibleTrending />
+          <VisibleTrending isSearching={this.props.isSearching} query={this.props.query}/>
           <BarChart></BarChart>
-          <button onClick={this.handleClick}>Hello</button>
         </PageWrapper>
       </GlobalWrapper>
     );
@@ -95,9 +95,19 @@ class Page extends Component {
     console.log(url);
     const graph = await getGraph("48e8d382-24f6-4fb7-9d3f-b11c94cf9b34");
     console.log(graph);
-    const memes = await searchMemes("cute");
-    console.log(memes);
   }
 }
 
-export default Page;
+const mapStateToProps = state => {
+  return {
+    isSearching: state.isSearching,
+    query: state.query
+  }
+}
+
+const VisiblePage = connect(
+  mapStateToProps
+)(Page)
+
+
+export default VisiblePage;

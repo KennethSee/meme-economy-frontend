@@ -1,15 +1,21 @@
 import React, { Component, Fragment } from 'react';
 import NavBarStyles from './styles/NavBarStyles';
-import ImageUploader from 'react-images-upload';
-import { getTagsFromImageFile, getTagsFromUrl } from './database/clarifai';
+import { getTagsFromImageFile } from './database/clarifai';
 import ReactDropzone from 'react-dropzone';
+import {isSearching, changeQuery} from './actions/memeActions';
+import {connect} from 'react-redux';
 
 class NavBar extends Component {
-
   constructor(props) {
     super(props);
-     this.state = { file: '' };
+     this.state = { file: '', query: ''};
      this.onDrop = this.onDrop.bind(this);
+     this.handleChange = this.handleChange.bind(this);
+     this.search = this.search.bind(this);
+  }
+
+  handleChange(e) {
+    this.setState({query: e.target.value});
   }
 
   onDrop(files, rejected) {
@@ -34,41 +40,54 @@ class NavBar extends Component {
     // });
   }
 
+  search() {
+    this.props.setIsSearching();
+    this.props.setQuery(this.state.query);
+    this.setState({query: ''})
+  }
+
   render() {
     return (
-        <NavBarStyles>
-      <ReactDropzone onDrop={this.onDrop}>
-        {({getRootProps, getInputProps, isDragActive}) => {
-          return (
-            <span
-              {...getRootProps()}
-            >
-              <input {...getInputProps()} />
-              {
-                isDragActive ?
-                  <Fragment>Search Meme</Fragment>:
-                  <Fragment>Meme Economy</Fragment>
-              }
-            </span>
-          )
-        }}
-      </ReactDropzone>
+      <NavBarStyles>
+        <ReactDropzone onDrop={this.onDrop}>
+          {({getRootProps, getInputProps, isDragActive}) => {
+            return (
+              <span
+                {...getRootProps()}
+              >
+                <input {...getInputProps()} />
+                {
+                  isDragActive ?
+                    <Fragment>Search Meme</Fragment>:
+                    <Fragment>Meme Economy</Fragment>
+                }
+              </span>
+            )
+          }}
+        </ReactDropzone>
           <div className="search">
-            <button type="submit"><span role="img" aria-label="search">🔎</span></button>
-            <input type="text" placeholder="Search for a meme..."></input>
+            <button onClick={this.search} type="submit"><span role="img" aria-label="search">🔎</span></button>
+            <input type="text" onChange={this.handleChange} value={this.state.query} placeholder="Search for a meme..."></input>
           </div>
-        </NavBarStyles>
+      </NavBarStyles>
     );
   }
 }
 
-/*
-            <ImageUploader
-                  withIcon={false}
-                  buttonText='Search by image'
-                  onChange={this.onDrop}
-                  imgExtension={['.jpg', '.gif', '.png']}
-                  maxFileSize={5242880}
-              />
-              */
-export default NavBar;
+const mapDispatchToProps = dispatch => {
+  return {
+    setIsSearching: () => {
+      dispatch(isSearching(true))
+    },
+    setQuery: query => {
+      dispatch(changeQuery(query))
+    }
+  }
+}
+
+const VisibleNavBar = connect(
+  null,
+  mapDispatchToProps
+)(NavBar)
+
+export default VisibleNavBar;
