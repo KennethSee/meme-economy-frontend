@@ -26,13 +26,13 @@ export const getTagsFromUrl = async (imgUrl) => {
  *  Promise(ArrayOfStrings)
 */
 export const getTagsFromImageFile = async (base64Bytes) => {
-  const model = await ClarApp.models.initModel({id: Clarifai.GENERAL_MODEL, version: "aa7f35c01e0642fda5cf400f543e7c40"});
   try {
-    const response = await model.predict(Clarifai.GENERAL_MODEL, { base64: base64Bytes});
+    console.log(base64Bytes);
+    const response = await ClarApp.models.predict(Clarifai.GENERAL_MODEL, {base64: base64Bytes});
     const concepts =  await response['outputs'][0]['data']['concepts'];
     const tags = concepts.map(concept => concept.name);
     return tags;
-  } catch(err) {
+  } catch (err) {
     console.log(err);
   }
 }
@@ -99,7 +99,7 @@ export const getTopXMatchesFromTags = (tagsOfOnePic, allTagsAllPics, x) => {
 
 
 
-export default { getTopXMatchesFromTags }
+export default { getTagsFromUrl, getTopXMatchesFromTags, getTagsFromImageFile }
 /***
  * Usage Instructions:
  * const clarifai = require('./clarifai');
