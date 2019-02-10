@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import NavBarStyles from './styles/NavBarStyles';
 import { getTagsFromImageFile } from './database/clarifai';
 import ReactDropzone from 'react-dropzone';
-import {isSearching, changeQuery} from './actions/memeActions';
+import { isSearching, changeQuery } from './actions/memeActions';
 import {connect} from 'react-redux';
 
 class NavBar extends Component {
@@ -12,6 +12,7 @@ class NavBar extends Component {
      this.onDrop = this.onDrop.bind(this);
      this.handleChange = this.handleChange.bind(this);
      this.search = this.search.bind(this);
+     this.textSearch = this.textSearch.bind(this);
   }
 
   handleChange(e) {
@@ -25,19 +26,23 @@ class NavBar extends Component {
       let ourFile = files[0];
       const reader = new FileReader();
       reader.onload = (event) => {
-        console.log(event);
         getTagsFromImageFile(event.target.result.split(',')[1])
           .then(result => {
-            console.log(result);
+            this.search(result.join(','), ourFile.name); // kinda hacky wacky to turn it back into a string
+            console.log('File Name: ' + ourFile.name);
           })
       };
       reader.readAsDataURL(ourFile);
     }
   }
 
-  search() {
+  search(query, queryText) {
     this.props.setIsSearching();
-    this.props.setQuery(this.state.query);
+    this.props.setQuery(query, queryText);
+  }
+
+  textSearch() {
+    this.search(this.state.query, this.state.query)
     this.setState({query: ''})
   }
 
@@ -61,7 +66,7 @@ class NavBar extends Component {
           }}
         </ReactDropzone>
           <div className="search">
-            <button onClick={this.search} type="submit"><span role="img" aria-label="search">🔎</span></button>
+            <button onClick={this.textSearch} type="submit"><span role="img" aria-label="search">🔎</span></button>
             <input type="text" onChange={this.handleChange} value={this.state.query} placeholder="Search for a meme..."></input>
           </div>
       </NavBarStyles>
@@ -74,9 +79,9 @@ const mapDispatchToProps = dispatch => {
     setIsSearching: () => {
       dispatch(isSearching(true))
     },
-    setQuery: query => {
-      dispatch(changeQuery(query))
-    }
+    setQuery: (query, queryText) => {
+      dispatch(changeQuery(query, queryText))
+    },
   }
 }
 

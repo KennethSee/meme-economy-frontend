@@ -27,7 +27,6 @@ export const getTagsFromUrl = async (imgUrl) => {
 */
 export const getTagsFromImageFile = async (base64Bytes) => {
   try {
-    console.log(base64Bytes);
     const response = await ClarApp.models.predict(Clarifai.GENERAL_MODEL, {base64: base64Bytes});
     const concepts =  await response['outputs'][0]['data']['concepts'];
     const tags = concepts.map(concept => concept.name);

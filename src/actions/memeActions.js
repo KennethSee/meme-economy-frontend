@@ -16,9 +16,10 @@ export function isSearching(searchingHuh) {
   }
 }
 
-export function changeQuery(query) {
+export function changeQuery(query, queryText) {
   return {
     type: CHANGE_QUERY,
-    query
+    query,
+    queryText
   }
 }

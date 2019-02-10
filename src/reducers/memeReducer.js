@@ -3,7 +3,8 @@ import { CHANGE_MEME, IS_SEARCHING, CHANGE_QUERY } from '../actions';
 const initialState = {
   memeId: null,
   isSearching: false,
-  query: ''
+  query: '',
+  queryText: ''
 }
 
 function memeReducer(state = initialState, action) {
@@ -21,7 +22,8 @@ function memeReducer(state = initialState, action) {
     case CHANGE_QUERY:
       return {
         ...state,
-        query: action.query
+        query: action.query,
+        queryText: action.queryText
       }
     default:
       return state;
