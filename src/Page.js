@@ -71,7 +71,7 @@ const GlobalWrapper = styled.div`
 `;
 
 const PageWrapper = styled.div`
-  height: calc(100% - 119px);
+  height: calc(100% - 141px);
 `;
 
 class Page extends Component {
@@ -88,13 +88,6 @@ class Page extends Component {
         </PageWrapper>
       </GlobalWrapper>
     );
-  }
-  
-  async handleClick() {
-    const url = await getMemeUrl("48e8d382-24f6-4fb7-9d3f-b11c94cf9b34");
-    console.log(url);
-    const graph = await getGraph("48e8d382-24f6-4fb7-9d3f-b11c94cf9b34");
-    console.log(graph);
   }
 }
 
