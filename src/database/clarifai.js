@@ -4,7 +4,11 @@ const ClarConfig = require('../Config').clarifai;
 const ClarApp = new Clarifai.App(ClarConfig);
 
 /**
- * Returns a Promise that resolves into the all the tags for a given picture
+ * Returns a Promise that resolves into all the tags for a given picture via url
+ * Input:
+ *  imgUrl: String
+ * Output:
+ *  Promise(ArrayOfStrings)
  */
 export const getTagsFromUrl = async (imgUrl) => {
   const model = await ClarApp.models.initModel({id: Clarifai.GENERAL_MODEL, version: "aa7f35c01e0642fda5cf400f543e7c40"});
@@ -12,6 +16,25 @@ export const getTagsFromUrl = async (imgUrl) => {
   const concepts =  await response['outputs'][0]['data']['concepts'];
   const tags = concepts.map(concept => concept.name);
   return tags;
+}
+
+/**
+ * Returns a promise that resolves into all the tags for a given picture via base64Bytes
+ * Input:
+ *  base64Bytes: String
+ * Output:
+ *  Promise(ArrayOfStrings)
+*/
+export const getTagsFromImageFile = async (base64Bytes) => {
+  const model = await ClarApp.models.initModel({id: Clarifai.GENERAL_MODEL, version: "aa7f35c01e0642fda5cf400f543e7c40"});
+  try {
+    const response = await model.predict(Clarifai.GENERAL_MODEL, { base64: base64Bytes});
+    const concepts =  await response['outputs'][0]['data']['concepts'];
+    const tags = concepts.map(concept => concept.name);
+    return tags;
+  } catch(err) {
+    console.log(err);
+  }
 }
 
 /**
