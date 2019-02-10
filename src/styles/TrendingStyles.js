@@ -7,6 +7,16 @@ const Trending = styled.div`
   overflow: scroll;
   font-size: 30px;
   float: left;
+  background-color: lightgray;
+
+  .title {
+    position: fixed;
+    background-color: white;
+    width: 40%;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    z-index: 10;
+  }
 
   .tile {
     width: 300px;
@@ -41,6 +51,11 @@ const Trending = styled.div`
     border: 3px solid green;
     transform: scale(1.1);
   }
+
+  .meme-container {
+    margin-top: 80px;
+  }
+
 `;
 
 export default Trending;
